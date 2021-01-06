@@ -1,10 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Navigation() {
+const Navigation = React.memo(function Navigation() {
+  const logoURL = process.env.REACT_APP_FULL_LOGO_PATH;
   return (
     <>
       <nav>
+        <div>
+          <Link to="/">
+            <img src={logoURL} width="200" height="50" alt="error" />
+          </Link>
+        </div>
         <span>
           <Link to="/">홈</Link>
         </span>
@@ -23,5 +29,5 @@ function Navigation() {
       </nav>
     </>
   );
-}
-export default Navigation;
+});
+export default React.memo(Navigation);
