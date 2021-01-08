@@ -85,7 +85,7 @@ function Question({ onToggleQuestion }) {
       subject: question.subject,
       passwoard: question.password,
       text: question.text,
-      creadtedAt: Date.now(),
+      createdAt: Date.now(),
       files: fileObj,
       answered: false,
     };

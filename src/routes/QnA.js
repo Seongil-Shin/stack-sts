@@ -1,12 +1,36 @@
 import React, { useState } from "react";
-import StorageService from "fbase";
+import { fireStoreService } from "fbase";
 import Question from "components/Question";
+import QuestionList from "components/QuestionList";
 
 function QnA() {
   const [doseQuestion, setDoseQeustion] = useState(true);
+  const [questions, setQuestions] = useState([]);
 
   const onToggleQuestion = () => {
-    setDoseQeustion((prev) => !prev);
+    if (doseQuestion === true) {
+      setDoseQeustion((prev) => !prev);
+      getQuestions();
+    } else {
+      setDoseQeustion((prev) => !prev);
+      setQuestions((prev) => []);
+    }
+  };
+
+  const getQuestions = async () => {
+    const dbQuestions = await fireStoreService
+      .collection("questions")
+      .orderBy("createdAt", "desc")
+      .get();
+    const questionArray = [];
+    dbQuestions.forEach((question) => {
+      const quesObj = {
+        ...question.data(),
+        id: question.id,
+      };
+      questionArray.push(quesObj);
+    });
+    setQuestions((prev) => questionArray);
   };
 
   return (
@@ -14,9 +38,10 @@ function QnA() {
       {doseQuestion ? (
         <Question onToggleQuestion={onToggleQuestion} />
       ) : (
-        <div>
-          <button onClick={onToggleQuestion}>질문하기 </button>
-        </div>
+        <QuestionList
+          onToggleQuestion={onToggleQuestion}
+          questions={questions}
+        />
       )}
     </div>
   );
