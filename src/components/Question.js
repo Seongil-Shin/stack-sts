@@ -16,7 +16,6 @@ function Question({ onToggleQuestion }) {
     },
   ]);
   const fileId = useRef(2);
-  const [attachFiles, setAttachFiles] = useState([]);
 
   const onChange = (event) => {
     const {
@@ -62,6 +61,7 @@ function Question({ onToggleQuestion }) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    const attachFiles = [];
     if (uploadFiles !== null) {
       for (const file of uploadFiles) {
         if (file.fileURL !== "") {
@@ -76,19 +76,19 @@ function Question({ onToggleQuestion }) {
             URL: await response.ref.getDownloadURL(),
             name: file.fileName,
           };
-          setAttachFiles(attachFiles.concat(tempFile));
-          console.log(attachFiles);
+          attachFiles.push(tempFile);
         }
       }
     }
+    const fileObj = Object.assign({}, attachFiles);
     const quesObj = {
       subject: question.subject,
       passwoard: question.password,
       text: question.text,
       creadtedAt: Date.now(),
-      files: attachFiles,
+      files: fileObj,
+      answered: false,
     };
-    console.log(quesObj);
     await fireStoreService.collection("questions").add(quesObj);
     onToggleQuestion();
     initialize();
@@ -118,7 +118,7 @@ function Question({ onToggleQuestion }) {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <label>
+        <label key="1">
           {" "}
           제목 :{" "}
           <input
@@ -166,8 +166,8 @@ function Question({ onToggleQuestion }) {
           required
         ></textarea>
         <br></br>
-        {uploadFiles.map((file) => (
-          <label>
+        {uploadFiles.map((file, index) => (
+          <label key={index}>
             <input type="file" onChange={(e) => onFileChange(file.id, e)} />
             <button onClick={(e) => onFileDelete(file.id, e)}>삭제</button>
             <br />
