@@ -83,11 +83,12 @@ function Question({ onToggleQuestion }) {
     const fileObj = Object.assign({}, attachFiles);
     const quesObj = {
       subject: question.subject,
-      passwoard: question.password,
+      password: question.password,
       text: question.text,
       createdAt: Date.now(),
       files: fileObj,
       answered: false,
+      comment: {},
     };
     await fireStoreService.collection("questions").add(quesObj);
     onToggleQuestion();

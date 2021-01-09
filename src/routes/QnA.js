@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { fireStoreService } from "fbase";
-import Question from "components/Question";
-import QuestionList from "components/QuestionList";
+import Question from "components/Questions/WritingQuestion";
+import QuestionList from "components/Questions/QuestionList";
+import { useHistory } from "react-router";
 
 function QnA() {
   const [doseQuestion, setDoseQeustion] = useState(true);
   const [questions, setQuestions] = useState([]);
+  const history = useHistory();
 
   const onToggleQuestion = () => {
     if (doseQuestion === true) {
       setDoseQeustion((prev) => !prev);
-      getQuestions();
+      getQuestions([]);
     } else {
       setDoseQeustion((prev) => !prev);
       setQuestions((prev) => []);
@@ -41,6 +43,7 @@ function QnA() {
         <QuestionList
           onToggleQuestion={onToggleQuestion}
           questions={questions}
+          history={history}
         />
       )}
     </div>
