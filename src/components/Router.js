@@ -6,7 +6,7 @@ import QnA from "routes/QnA";
 import ConsCase from "routes/ConsCase";
 import Navigation from "components/Navigation";
 import QuestionDocument from "components/Questions/QuestionDocument";
-import Admin from "routes/Admin";
+import AdminIndex from "routes/AdminIndex";
 
 function AppRouter() {
   return (
@@ -14,11 +14,12 @@ function AppRouter() {
       <Navigation />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/Greeting" component={Greeting} />
-        <Route exact path="/ConsCase" component={ConsCase} />
-        <Route exact path="/QnA" component={QnA} />
-        <Route exact path="/QnA/document" component={QuestionDocument} />
-        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/greeting" component={Greeting} />
+        <Route exact path="/conscase" component={ConsCase} />
+        <Route exact path="/qna" component={QnA} />
+        <Route exact path="/qna/document" component={QuestionDocument} />
+        <Route path="/admin" component={AdminIndex} />
+        {/*
         <Route
           render={({ location }) => (
             <div>
@@ -26,7 +27,7 @@ function AppRouter() {
               <p>{location.pathname}</p>
             </div>
           )}
-        />
+          />*/}
       </Switch>
     </Router>
   );

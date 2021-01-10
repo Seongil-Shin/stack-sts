@@ -13,7 +13,7 @@ function QuestionList({ onToggleQuestion, questions, history }) {
 
   const onDocumentClick = (question) => {
     history.push({
-      pathname: "/QnA/document",
+      pathname: "/qna/document",
       state: { question: question },
     });
   };
