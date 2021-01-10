@@ -6,6 +6,7 @@ import QnA from "routes/QnA";
 import ConsCase from "routes/ConsCase";
 import Navigation from "components/Navigation";
 import QuestionDocument from "components/Questions/QuestionDocument";
+import Admin from "routes/Admin";
 
 function AppRouter() {
   return (
@@ -17,6 +18,7 @@ function AppRouter() {
         <Route exact path="/ConsCase" component={ConsCase} />
         <Route exact path="/QnA" component={QnA} />
         <Route exact path="/QnA/document" component={QuestionDocument} />
+        <Route exact path="/admin" component={Admin} />
         <Route
           render={({ location }) => (
             <div>
