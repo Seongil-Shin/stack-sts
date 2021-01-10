@@ -4,11 +4,9 @@ import Login from "components/admin/Login";
 import AdminHome from "components/admin/AdminHome";
 import Navigation from "components/admin/Navigation";
 
-function Admin({ match }) {
+function Admin({ userId, setUserId }) {
   const [init, setInit] = useState(false);
   const [isLogined, setIsLogined] = useState(false);
-  const [userId, setUserId] = useState("");
-
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -18,7 +16,7 @@ function Admin({ match }) {
       }
       setInit(true);
     });
-  }, []);
+  }, [setUserId]);
 
   return (
     <>

@@ -19,7 +19,7 @@ function AppRouter() {
         <Route exact path="/qna" component={QnA} />
         <Route exact path="/qna/document" component={QuestionDocument} />
         <Route path="/admin" component={AdminIndex} />
-        {/*
+
         <Route
           render={({ location }) => (
             <div>
@@ -27,7 +27,7 @@ function AppRouter() {
               <p>{location.pathname}</p>
             </div>
           )}
-          />*/}
+        />
       </Switch>
     </Router>
   );
