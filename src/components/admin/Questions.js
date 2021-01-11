@@ -1,8 +1,9 @@
+import QuestionList from "components/Questions/QuestionList";
 import { fireStoreService } from "fbase";
 import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 
-function Questions() {
+function Questions({ history }) {
    const [questions, setQuestions] = useState([]);
 
    const getQuestions = async () => {
@@ -28,7 +29,7 @@ function Questions() {
    return (
       <>
          <Navigation />
-         <div>질문입니다.</div>
+         <QuestionList questions={questions} history={history} />
       </>
    );
 }

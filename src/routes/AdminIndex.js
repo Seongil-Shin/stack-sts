@@ -9,6 +9,7 @@ import {
 import Admin from "components/admin/Admin";
 import { useState } from "react";
 import ConscaseDocument from "components/ConscaseDocument";
+import QuestionDocument from "components/Questions/QuestionDocument";
 
 function AdminIndex() {
    const [userId, setUserId] = useState("");
@@ -40,6 +41,10 @@ function AdminIndex() {
                   exact
                   path="/admin/questions"
                   component={Questions}
+               />
+               <CustomRoute
+                  path="/admin/questions/document"
+                  component={QuestionDocument}
                />
             </Switch>
          </Router>
