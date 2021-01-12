@@ -8,17 +8,10 @@ import QuestionDocument from "components/Questions/QuestionDocument";
 import AdminIndex from "routes/AdminIndex";
 import Header from "./Header";
 
-const sections = [
-   { title: "홈", url: "/" },
-   { title: "인삿말", url: "/greeting" },
-   { title: "시공사례", url: "/conscase" },
-   { title: "문의", url: "/qna" },
-];
-
 function AppRouter() {
    return (
       <Router>
-         <Header title="Blog" sections={sections} />
+         <Header title="Blog" />
          <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/greeting" component={Greeting} />

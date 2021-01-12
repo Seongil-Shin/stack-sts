@@ -1,5 +1,4 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -14,22 +13,28 @@ const useStyles = makeStyles((theme) => ({
       flex: 1,
    },
    toolbarSecondary: {
-      justifyContent: "space-between",
+      justifyContent: "space-around",
       overflowX: "auto",
    },
    toolbarLink: {
       padding: theme.spacing(1),
+      fontSize: "23px",
       flexShrink: 0,
    },
 }));
 
 function Header(props) {
    const classes = useStyles();
-   const { sections } = props;
+   const sections = [
+      { title: "홈", url: "/" },
+      { title: "인삿말", url: "/greeting" },
+      { title: "시공사례", url: "/conscase" },
+      { title: "문의", url: "/qna" },
+   ];
    const logoURL = process.env.REACT_APP_FULL_LOGO_PATH;
 
    return (
-      <React.Fragment>
+      <>
          <Typography align="center" noWrap>
             <ReactLink to="/">
                <img src={logoURL} width="455" height="130" alt="error" />
@@ -37,7 +42,7 @@ function Header(props) {
          </Typography>
          <Toolbar
             component="nav"
-            variant="dense"
+            variant="regular"
             className={classes.toolbarSecondary}
          >
             {sections.map((section) => (
@@ -45,7 +50,7 @@ function Header(props) {
                   color="inherit"
                   noWrap
                   key={section.title}
-                  variant="body2"
+                  variant="inherit"
                   href={section.url}
                   className={classes.toolbarLink}
                >
@@ -53,18 +58,7 @@ function Header(props) {
                </Link>
             ))}
          </Toolbar>
-      </React.Fragment>
+      </>
    );
 }
-
-Header.propTypes = {
-   sections: PropTypes.arrayOf(
-      PropTypes.shape({
-         title: PropTypes.string.isRequired,
-         url: PropTypes.string.isRequired,
-      })
-   ).isRequired,
-   title: PropTypes.string.isRequired,
-};
-
 export default Header;

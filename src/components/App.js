@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
+import Paper from "@material-ui/core/Paper";
 import Router from "components/Router";
 import Footer from "components/Footer";
 
@@ -7,13 +8,15 @@ function App() {
    return (
       <>
          <Container maxWidth="lg">
-            <div>
-               <Router />
-            </div>
+            <Paper elevation={3}>
+               <div>
+                  <Router />
+               </div>
 
-            <footer>
-               <Footer />
-            </footer>
+               <footer>
+                  <Footer />
+               </footer>
+            </Paper>
          </Container>
       </>
    );
