@@ -1,11 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "components/App";
-import "baseCss.css";
+import "./css/main.css";
+
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+   typography: {
+      fontFamily: "Jeju Gothic",
+   },
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+   <React.StrictMode>
+      <MuiThemeProvider theme={theme}>
+         <App />
+      </MuiThemeProvider>
+   </React.StrictMode>,
+   document.getElementById("root")
 );

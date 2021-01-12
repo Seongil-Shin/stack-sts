@@ -4,14 +4,21 @@ import Home from "routes/Home";
 import Greeting from "routes/Greeting";
 import QnA from "routes/QnA";
 import ConsCase from "routes/ConsCase";
-import Navigation from "components/Navigation";
 import QuestionDocument from "components/Questions/QuestionDocument";
 import AdminIndex from "routes/AdminIndex";
+import Header from "./Header";
+
+const sections = [
+   { title: "홈", url: "/" },
+   { title: "인삿말", url: "/greeting" },
+   { title: "시공사례", url: "/conscase" },
+   { title: "문의", url: "/qna" },
+];
 
 function AppRouter() {
    return (
       <Router>
-         <Navigation />
+         <Header title="Blog" sections={sections} />
          <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/greeting" component={Greeting} />

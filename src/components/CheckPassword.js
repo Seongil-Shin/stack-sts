@@ -7,6 +7,7 @@ function CheckPassword({ password, onToggleIsPassword, history }) {
   const goBack = () => {
     history.goBack();
   };
+  
   const onSubmit = (event) => {
     event.preventDefault();
     if (checkPassword === password) {

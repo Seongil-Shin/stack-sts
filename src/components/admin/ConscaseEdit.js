@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg.css";
+import "css/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { fireStoreService } from "fbase";
