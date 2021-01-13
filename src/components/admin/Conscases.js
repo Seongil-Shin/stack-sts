@@ -2,7 +2,6 @@ import ConscaseList from "components/ConscaseList";
 import { fireStoreService } from "fbase";
 import React, { useEffect, useState } from "react";
 import ConscaseEdit from "./ConscaseEdit";
-import Navigation from "./Navigation";
 
 function Conscases({ history }) {
    const [Editing, setEditing] = useState(false);
@@ -42,7 +41,6 @@ function Conscases({ history }) {
             </>
          ) : (
             <>
-               <Navigation />
                <ConscaseList conscases={conscases} history={history} />
                <button onClick={onEditingClick}>작성</button>
             </>

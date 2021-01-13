@@ -1,5 +1,27 @@
 import React, { useRef, useState } from "react";
 import { storageService, fireStoreService } from "fbase";
+import Container from "@material-ui/core/Container";
+import MuiAlert from "@material-ui/lab/Alert";
+import TextField from "@material-ui/core/TextField";
+import Checkbox from "@material-ui/core/Checkbox";
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles((theme) => ({
+   container: {
+      alignContent: "center",
+   },
+   subject: {
+      width: "70%",
+   },
+   content: {
+      width: "90%",
+   },
+   fileInput: {
+      display: "none",
+   },
+}));
 
 function Question({ onToggleQuestion }) {
    const [question, setQuestion] = useState({
@@ -16,6 +38,7 @@ function Question({ onToggleQuestion }) {
       },
    ]);
    const fileId = useRef(2);
+   const styles = useStyles();
 
    const onChange = (event) => {
       const {
@@ -118,33 +141,30 @@ function Question({ onToggleQuestion }) {
 
    return (
       <>
-         <form onSubmit={onSubmit}>
-            <label key="1">
-               {" "}
-               제목 :{" "}
-               <input
+         <Container maxWidth="md" className={styles.container}>
+            <form onSubmit={onSubmit}>
+               <TextField
                   value={question.subject}
                   name="subject"
                   onChange={onChange}
-                  type="text"
-                  placeholder=""
+                  label="제목"
                   maxLength={120}
-               ></input>
-            </label>
-            <br />
-            <label>
-               비밀번호 :{" "}
-               <input
-                  type="checkBox"
-                  onChange={onToggleIsPassword}
-                  checked={isPassword}
-               />
-            </label>
-            <br />
-            {isPassword ? (
+                  className={styles.subject}
+                  required
+               ></TextField>
+               <br /> <br />
                <label>
-                  비밀번호 입력 :{" "}
-                  <input
+                  비밀번호 :{" "}
+                  <Checkbox
+                     type="checkBox"
+                     onChange={onToggleIsPassword}
+                     checked={isPassword}
+                     color="primary"
+                  />
+               </label>
+               <br />
+               {isPassword ? (
+                  <TextField
                      type="password"
                      name="password"
                      onChange={onChange}
@@ -152,44 +172,84 @@ function Question({ onToggleQuestion }) {
                      maxLength={15}
                      required
                   />
-               </label>
-            ) : (
-               <div>
-                  비밀번호 미설정 시 문의 삭제 및 수정은 관리자를 통해서만
-                  가능합니다.
-               </div>
-            )}
-            <h4> 내용 </h4>
-            <textarea
-               name="text"
-               value={question.text}
-               onChange={onChange}
-               maxLength={5000}
-               style={{ width: 800, height: 400 }}
-               placeholder="*형식 내용 상관없이 모든 문의 가능합니다.
+               ) : (
+                  <MuiAlert elevation={6} variant="filled" severity="warning">
+                     비밀번호 미설정 시 문의 삭제 및 수정은 관리자를 통해서만
+                     가능합니다.
+                  </MuiAlert>
+               )}
+               <br />
+               <br />
+               <h4> 내용 </h4>
+               <TextField
+                  name="text"
+                  value={question.text}
+                  onChange={onChange}
+                  multiline
+                  rows="21"
+                  className={styles.content}
+                  placeholder="*형식 내용 상관없이 모든 문의 가능합니다.
 *이메일, 전화번호, 카카오톡 ID 등 어떤 연락처라도 남겨주시면, 그쪽으로 답변드리겠습니다.
 *연락처가 없을 시, 댓글로 답변드리겠습니다."
-               required
-            ></textarea>
-            <br></br>
-            {uploadFiles.map((file, index) => (
-               <label key={index}>
-                  <input
-                     type="file"
-                     onChange={(e) => onFileChange(file.id, e)}
-                  />
-                  <button onClick={(e) => onFileDelete(file.id, e)}>
-                     삭제
-                  </button>
-                  <br />
-               </label>
-            ))}
+                  required
+               />
+               <br />
+               <br />
+               <Container>
+                  {uploadFiles.map((file, index) => (
+                     <label key={index}>
+                        <input
+                           id={index}
+                           type="file"
+                           className={styles.fileInput}
+                           onChange={(e) => onFileChange(file.id, e)}
+                        />
+                        <Button
+                           variant="outlined"
+                           size="small"
+                           color="primary"
+                           component="span"
+                        >
+                           파일추가
+                        </Button>
+                        {file.fileName !== null && (
+                           <span> {file.fileName}</span>
+                        )}
+                        <Button
+                           color="secondary"
+                           size="small"
+                           variant="outlined"
+                           onClick={(e) => onFileDelete(file.id, e)}
+                        >
+                           삭제
+                        </Button>
+                        <br />
+                     </label>
+                  ))}
+                  &nbsp;
+                  <Box ml={14}>
+                     <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={onAddFile}
+                     >
+                        파일 개수 추가
+                     </Button>
+                  </Box>
+               </Container>
+               <Button type="submit" color="primary" variant="outlined">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </Button>
+            </form>
             <br />
-            <button onClick={onAddFile}>파일추가</button>
-            <br />
-            <input type="submit" value="등록" />
-         </form>
-         <button onClick={onToggleQuestion}>문의목록</button>
+            <Button
+               onClick={onToggleQuestion}
+               color="primary"
+               variant="outlined"
+            >
+               문의목록
+            </Button>
+         </Container>
       </>
    );
 }

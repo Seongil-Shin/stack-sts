@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { authService } from "fbase";
 import AdminHome from "components/admin/AdminHome";
-import Navigation from "components/admin/Navigation";
 import AdminLogin from "components/admin/AdminLogin";
 
 function Admin({ userId, setUserId }) {
@@ -24,7 +23,6 @@ function Admin({ userId, setUserId }) {
          {init ? (
             isLogined || userId === process.env.REACT_APP_ADMIN_UID ? (
                <>
-                  <Navigation />
                   <AdminHome />
                </>
             ) : (

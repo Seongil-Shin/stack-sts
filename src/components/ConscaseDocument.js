@@ -1,7 +1,10 @@
 import { fireStoreService } from "fbase";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import htmlToDraft from "html-to-draftjs";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Fab from "@material-ui/core/Fab";
 
 function ConscaseDocument({ history }) {
    const location = useLocation();
@@ -37,15 +40,36 @@ function ConscaseDocument({ history }) {
       <>
          {init ? (
             <>
-               <h3>{conscase.subject}</h3>
-               <div dangerouslySetInnerHTML={{ __html: conscase.html }} />
-               <button onClick={goBack}>목록으로</button>{" "}
-               {location.pathname === "/admin/conscase/document" && (
-                  <div>
-                     <button>수정</button>
-                     <button onClick={onDelete}>삭제</button>
-                  </div>
-               )}
+               <br />
+               <Container maxWidth="lg">
+                  <Typography component="h1" variant="h4">
+                     <h3>{conscase.subject}</h3>
+                  </Typography>
+                  <hr />
+                  <Box ml={2} overflow="auto">
+                     <div dangerouslySetInnerHTML={{ __html: conscase.html }} />
+                     <Fab onClick={goBack} color="primary" variant="extended">
+                        &nbsp;&nbsp;&nbsp;목록으로&nbsp;&nbsp;&nbsp;
+                     </Fab>{" "}
+                     <br />
+                     <br />
+                     {location.pathname === "/admin/conscase/document" && (
+                        <div>
+                           <Fab color="primary" variant="extended">
+                              &nbsp;&nbsp;&nbsp;수정&nbsp;&nbsp;&nbsp;
+                           </Fab>
+                           &nbsp;&nbsp;&nbsp;
+                           <Fab
+                              color="primary"
+                              variant="extended"
+                              onClick={onDelete}
+                           >
+                              &nbsp;&nbsp;&nbsp;삭제&nbsp;&nbsp;&nbsp;
+                           </Fab>
+                        </div>
+                     )}
+                  </Box>
+               </Container>
             </>
          ) : (
             <>

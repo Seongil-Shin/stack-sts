@@ -3,3 +3,7 @@
    font-family: "Jeju Gothic";
    src: url(../fonts/JejuGothic.ttf) format("truetype");
 }
+img {
+   max-width: 100%;
+   height: auto;
+}

@@ -1,7 +1,6 @@
 import QuestionList from "components/Questions/QuestionList";
 import { fireStoreService } from "fbase";
 import React, { useEffect, useState } from "react";
-import Navigation from "./Navigation";
 
 function Questions({ history }) {
    const [questions, setQuestions] = useState([]);
@@ -28,7 +27,6 @@ function Questions({ history }) {
 
    return (
       <>
-         <Navigation />
          <QuestionList questions={questions} history={history} />
       </>
    );
