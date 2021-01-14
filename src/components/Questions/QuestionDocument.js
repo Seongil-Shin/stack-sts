@@ -142,6 +142,9 @@ function QuestionDocument({ history }) {
                      >
                         뒤로가기
                      </Button>
+                     <Typography component="h1" variant="h6">
+                        {question.writer}
+                     </Typography>
                      <div>
                         {Object.values(question.files).map((file, index) => (
                            <div key={index}>

@@ -4,20 +4,25 @@ import "css/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { fireStoreService } from "fbase";
-import styled from "styled-components";
+import TextField from "@material-ui/core/TextField";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 
-const IntroduceContent = styled.div`
-   position: relative;
-   border: 0.0625rem solid #d7e2eb;
-   border-radius: 0.75rem;
-   overflow: hidden;
-   padding: 1.5rem;
-   width: 50%;
-   margin: 0 auto;
-   margin-bottom: 4rem;
-`;
+const useStyles = makeStyles((theme) => ({
+   subject: {
+      width: "60%",
+   },
+   checkContainer: {
+      width: "100%",
+   },
+   checkContent: {
+      minHeight: 300,
+   },
+}));
 
 function ConscaseEdit({ onEditingClick }) {
+   const styles = useStyles();
    const [subject, setSubject] = useState("");
    const [check, setCheck] = useState(false);
    const [editorToHtml, setEditorToHTML] = useState(null);
@@ -61,13 +66,17 @@ function ConscaseEdit({ onEditingClick }) {
    return (
       <div>
          <form onSubmit={onSubmit}>
-            <span>제목 : </span>
-            <input
-               type="text"
-               name="subject"
+            <TextField
+               id="subject"
                value={subject}
+               name="subject"
                onChange={onChange}
+               label="제목"
+               maxLength={120}
+               className={styles.subject}
+               required
             />
+            <br />
             <Editor
                wrapperClassName="wrapper-class"
                editorClassName="editor"
@@ -85,25 +94,57 @@ function ConscaseEdit({ onEditingClick }) {
                editorState={editorState}
                onEditorStateChange={onEditorStateChange}
             />
-            <span>썸네일 : </span>
-            <input
-               type="text"
-               name="thumbnail"
+            <br />
+            <TextField
+               id="subject"
                value={thumbnail}
+               name="thumbnail"
                onChange={onChange}
+               label="썸네일"
+               maxLength={120}
+               required
             />
             <br />
-            <input type="submit" value="제출" />
+            <br />
+            <Button type="submit" color="primary" variant="outlined">
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;시공사례
+               등록&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </Button>
          </form>
-         <button onClick={onEditingClick}>취소</button>
-         <button onClick={onCheck}>확인</button>
+         <br />
+         <Button
+            size="small"
+            color="primary"
+            variant="outlined"
+            onClick={onEditingClick}
+         >
+            등록 취소
+         </Button>
+         &nbsp;&nbsp;
+         <Button
+            size="small"
+            color="primary"
+            variant="outlined"
+            onClick={onCheck}
+         >
+            미리보기
+         </Button>
+         <br />
+         <br />
          {check && (
-            <>
-               <IntroduceContent
-                  dangerouslySetInnerHTML={{ __html: editorToHtml }}
-               />
-               <button onClick={onUnCheck}>확인 취소</button>
-            </>
+            <Box
+               className={styles.checkContainer}
+               border={1}
+               borderRadius={13}
+               borderColor="grey.500"
+            >
+               <Box disableGutters className={styles.checkContent}>
+                  <div dangerouslySetInnerHTML={{ __html: editorToHtml }} />
+               </Box>
+               <Button color="primary" variant="outlined" onClick={onUnCheck}>
+                  확인 취소
+               </Button>
+            </Box>
          )}
       </div>
    );

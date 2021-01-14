@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { storageService, fireStoreService } from "fbase";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
    content: {
       width: "90%",
    },
+   writer: {
+      width: "30%",
+   },
 }));
 
 function WritingQuestion({ onToggleQuestion }) {
@@ -25,6 +28,7 @@ function WritingQuestion({ onToggleQuestion }) {
       subject: "",
       password: "",
       text: "",
+      writer: "",
    });
    const [isPassword, setIsPassword] = useState(true);
    const [uploadFiles, setUploadFiles] = useState([
@@ -36,6 +40,12 @@ function WritingQuestion({ onToggleQuestion }) {
    ]);
    const fileId = useRef(2);
    const styles = useStyles();
+
+   useEffect(() => {
+      return () => {
+         initialize();
+      };
+   }, []);
 
    const onChange = (event) => {
       const {
@@ -74,7 +84,7 @@ function WritingQuestion({ onToggleQuestion }) {
 
    const initialize = () => {
       setIsPassword((prev) => true);
-      setQuestion({ subject: "", password: "", text: "", fileURL: [] });
+      setQuestion({ subject: "", password: "", text: "", writer: "" });
       setUploadFiles((prev) => [{ id: 1, fileURL: "" }]);
       fileId.current = 2;
    };
@@ -103,6 +113,7 @@ function WritingQuestion({ onToggleQuestion }) {
       const fileObj = Object.assign({}, attachFiles);
       const quesObj = {
          subject: question.subject,
+         writer: question.writer,
          password: question.password,
          text: question.text,
          createdAt: Date.now(),
@@ -148,6 +159,17 @@ function WritingQuestion({ onToggleQuestion }) {
                   label="제목"
                   maxLength={120}
                   className={styles.subject}
+                  required
+               />
+               <br /> <br />
+               <TextField
+                  id="writer"
+                  value={question.writer}
+                  name="writer"
+                  onChange={onChange}
+                  label="작성자"
+                  maxLength={120}
+                  className={styles.writer}
                   required
                />
                <br /> <br />
@@ -197,8 +219,7 @@ function WritingQuestion({ onToggleQuestion }) {
                   {uploadFiles.map((file, index) => (
                      <label key={index}>
                         <input
-                           type="file"
-                           id={index}
+                           type={"file"}
                            style={{ display: "none" }}
                            onChange={(e) => onFileChange(file.id, e)}
                         />
@@ -208,8 +229,9 @@ function WritingQuestion({ onToggleQuestion }) {
                            color="primary"
                            component="span"
                         >
-                           파일추가
+                           파일선택
                         </Button>
+
                         {file.fileName !== null && (
                            <span> {file.fileName}</span>
                         )}

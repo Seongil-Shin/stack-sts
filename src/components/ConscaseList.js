@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Fab from "@material-ui/core/Fab";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
    heroContent: {
@@ -100,13 +100,14 @@ function ConscaseList({ conscases, history }) {
                      })}
                </Grid>
                <footer className={classes.footer} align="center">
-                  <Fab
+                  <Button
+                     size="large"
                      onClick={onSeeMoreClick}
-                     variant="extended"
+                     variant="outlined"
                      color="primary"
                   >
                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;더보기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </Fab>
+                  </Button>
                </footer>
             </Container>
          </main>
