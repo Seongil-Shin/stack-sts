@@ -14,9 +14,28 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
+const useInterval = (callback, delay) => {
+   const savedCallback = React.useRef();
+
+   React.useEffect(() => {
+      savedCallback.current = callback;
+   }, [callback]);
+
+   React.useEffect(() => {
+      function tick() {
+         savedCallback.current();
+      }
+      if (delay !== null) {
+         let id = setInterval(tick, delay);
+         return () => clearInterval(id);
+      }
+   }, [delay]);
+};
+
 function Home() {
    const classes = useStyles();
    const [HomePost, setHomePost] = useState({});
+   const [seconds, setSeconds] = useState(0);
    const images = [
       process.env.REACT_APP_HOME_1,
       process.env.REACT_APP_HOME_2,
@@ -24,6 +43,11 @@ function Home() {
       process.env.REACT_APP_HOME_4,
       process.env.REACT_APP_HOME_5,
    ];
+
+   useInterval(() => {
+      setSeconds((prev) => prev + 1);
+      setHomePost({ image: images[seconds % 5] });
+   }, 10000);
 
    useEffect(() => {
       const homePhotoSwitch = Date.now() % 5;

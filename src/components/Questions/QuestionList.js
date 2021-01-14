@@ -10,6 +10,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TablePagination from "@material-ui/core/TablePagination";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import CheckIcon from "@material-ui/icons/Check";
 
 const useStyles = makeStyles({
    questionContainer: {},
@@ -18,6 +20,9 @@ const useStyles = makeStyles({
    },
    pagination: {
       float: "left",
+   },
+   answeredRow: {
+      backgroundColor: "#f1f1f1",
    },
 });
 
@@ -81,13 +86,22 @@ function QuestionList({ onToggleQuestion, questions, history }) {
                            <TableRow
                               key={index}
                               onClick={() => onDocumentClick(question)}
+                              className={
+                                 question.answered && styles.answeredRow
+                              }
                            >
                               <TableCell>{question.subject}</TableCell>
                               <TableCell>
-                                 {question.answered ? "완료" : "  "}
+                                 {question.answered ? (
+                                    <CheckIcon color="secondary" />
+                                 ) : (
+                                    "  "
+                                 )}
                               </TableCell>
                               <TableCell>
-                                 {question.password !== "" && "비밀번호"}
+                                 {question.password !== "" && (
+                                    <LockOutlinedIcon />
+                                 )}
                               </TableCell>
                            </TableRow>
                         ))}

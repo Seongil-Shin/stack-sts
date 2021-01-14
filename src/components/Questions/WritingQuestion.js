@@ -7,6 +7,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -59,7 +61,7 @@ function WritingQuestion({ onToggleQuestion }) {
          target: { files },
       } = event;
       const theFile = files[0];
-      if (theFile !== null) {
+      if (theFile !== null && theFile !== undefined) {
          const reader = new FileReader();
          reader.onloadend = (finishedEvent) => {
             const {
@@ -235,14 +237,14 @@ function WritingQuestion({ onToggleQuestion }) {
                         {file.fileName !== null && (
                            <span> {file.fileName}</span>
                         )}
-                        <Button
+                        <IconButton
+                           aria-label="delete"
                            color="secondary"
                            size="small"
-                           variant="outlined"
                            onClick={(e) => onFileDelete(file.id, e)}
                         >
-                           삭제
-                        </Button>
+                           <DeleteOutlinedIcon />
+                        </IconButton>
                         <br />
                      </label>
                   ))}
@@ -267,7 +269,7 @@ function WritingQuestion({ onToggleQuestion }) {
                color="primary"
                variant="outlined"
             >
-               문의목록
+               문의 내역
             </Button>
          </Container>
       </>

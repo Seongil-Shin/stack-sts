@@ -13,14 +13,21 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(8, 0, 6),
    },
-   cardGrid: {
+   listContainer: {
       paddingTop: theme.spacing(8),
       paddingBottom: theme.spacing(8),
    },
    card: {
+      padding: 0,
       height: "100%",
       display: "flex",
       flexDirection: "column",
+      "&:hover": {
+         cursor: "pointer",
+         color: "black",
+         boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.1)",
+         transition: "all 0.3s",
+      },
    },
    cardMedia: {
       paddingTop: "56.25%", // 16:9
@@ -64,7 +71,7 @@ function ConscaseList({ conscases, history }) {
                   </Typography>
                </Container>
             </div>
-            <Container className={classes.cardGrid} maxWidth="md">
+            <Container className={classes.listContainer} maxWidth="md">
                <Grid container spacing={4}>
                   {conscases
                      .slice(0, pages.current * 6)
