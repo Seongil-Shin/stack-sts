@@ -34,6 +34,9 @@ function ConscaseDocument({ history }) {
 
    useEffect(() => {
       getConscases();
+      return () => {
+         setConscase({});
+      };
    }, []);
 
    return (
@@ -41,9 +44,9 @@ function ConscaseDocument({ history }) {
          {init ? (
             <>
                <br />
-               <Container maxWidth="lg">
+               <Container maxWidth="md">
                   <Typography component="h1" variant="h4">
-                     <h3>{conscase.subject}</h3>
+                     {conscase.subject}
                   </Typography>
                   <hr />
                   <Box ml={2} overflow="auto">

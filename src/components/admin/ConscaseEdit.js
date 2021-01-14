@@ -50,15 +50,14 @@ function ConscaseEdit({ onEditingClick }) {
          draftToHtml(convertToRaw(editorState.getCurrentContent()))
       );
       setCheck(true);
-      console.log(editorToHtml);
    };
    const onUnCheck = () => {
       setCheck(false);
    };
-
    const onEditorStateChange = (editorState) => {
       setEditorState((prev) => editorState);
    };
+
    return (
       <div>
          <form onSubmit={onSubmit}>

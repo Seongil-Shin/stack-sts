@@ -49,7 +49,7 @@ function QuestionList({ onToggleQuestion, questions, history }) {
             <hr />
             {history.location.pathname === "/qna" && (
                <Button
-                  size="md"
+                  size="medium"
                   variant="outlined"
                   color="primary"
                   onClick={onToggleQuestion}

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { storageService, fireStoreService } from "fbase";
 import Container from "@material-ui/core/Container";
-import MuiAlert from "@material-ui/lab/Alert";
+import Alert from "@material-ui/lab/Alert";
 import TextField from "@material-ui/core/TextField";
 import Checkbox from "@material-ui/core/Checkbox";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,12 +18,9 @@ const useStyles = makeStyles((theme) => ({
    content: {
       width: "90%",
    },
-   fileInput: {
-      display: "none",
-   },
 }));
 
-function Question({ onToggleQuestion }) {
+function WritingQuestion({ onToggleQuestion }) {
    const [question, setQuestion] = useState({
       subject: "",
       password: "",
@@ -144,6 +141,7 @@ function Question({ onToggleQuestion }) {
          <Container maxWidth="md" className={styles.container}>
             <form onSubmit={onSubmit}>
                <TextField
+                  id="subject"
                   value={question.subject}
                   name="subject"
                   onChange={onChange}
@@ -151,20 +149,19 @@ function Question({ onToggleQuestion }) {
                   maxLength={120}
                   className={styles.subject}
                   required
-               ></TextField>
+               />
                <br /> <br />
-               <label>
-                  비밀번호 :{" "}
-                  <Checkbox
-                     type="checkBox"
-                     onChange={onToggleIsPassword}
-                     checked={isPassword}
-                     color="primary"
-                  />
-               </label>
+               비밀번호 :{" "}
+               <Checkbox
+                  id="isChecked"
+                  onChange={onToggleIsPassword}
+                  checked={isPassword}
+                  color="primary"
+               />
                <br />
                {isPassword ? (
                   <TextField
+                     id="password"
                      type="password"
                      name="password"
                      onChange={onChange}
@@ -173,15 +170,16 @@ function Question({ onToggleQuestion }) {
                      required
                   />
                ) : (
-                  <MuiAlert elevation={6} variant="filled" severity="warning">
+                  <Alert variant="outlined" severity="warning">
                      비밀번호 미설정 시 문의 삭제 및 수정은 관리자를 통해서만
                      가능합니다.
-                  </MuiAlert>
+                  </Alert>
                )}
                <br />
                <br />
                <h4> 내용 </h4>
                <TextField
+                  id="content"
                   name="text"
                   value={question.text}
                   onChange={onChange}
@@ -199,9 +197,9 @@ function Question({ onToggleQuestion }) {
                   {uploadFiles.map((file, index) => (
                      <label key={index}>
                         <input
-                           id={index}
                            type="file"
-                           className={styles.fileInput}
+                           id={index}
+                           style={{ display: "none" }}
                            onChange={(e) => onFileChange(file.id, e)}
                         />
                         <Button
@@ -253,4 +251,4 @@ function Question({ onToggleQuestion }) {
       </>
    );
 }
-export default Question;
+export default WritingQuestion;

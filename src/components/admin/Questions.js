@@ -1,10 +1,19 @@
 import QuestionList from "components/Questions/QuestionList";
 import { fireStoreService } from "fbase";
 import React, { useEffect, useState } from "react";
+import Navigation from "./Navigation";
+import Container from "@material-ui/core/Container";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+   content: {
+      paddingLeft: "15%",
+   },
+});
 
 function Questions({ history }) {
    const [questions, setQuestions] = useState([]);
-
+   const styles = useStyles();
    const getQuestions = async () => {
       const dbQuestions = await fireStoreService
          .collection("questions")
@@ -27,7 +36,10 @@ function Questions({ history }) {
 
    return (
       <>
-         <QuestionList questions={questions} history={history} />
+         <Navigation />
+         <Container className={styles.content}>
+            <QuestionList questions={questions} history={history} />
+         </Container>
       </>
    );
 }

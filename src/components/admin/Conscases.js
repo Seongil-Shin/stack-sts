@@ -2,10 +2,20 @@ import ConscaseList from "components/ConscaseList";
 import { fireStoreService } from "fbase";
 import React, { useEffect, useState } from "react";
 import ConscaseEdit from "./ConscaseEdit";
+import Navigation from "./Navigation";
+import Container from "@material-ui/core/Container";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+   content: {
+      paddingLeft: "15%",
+   },
+});
 
 function Conscases({ history }) {
    const [Editing, setEditing] = useState(false);
    const [conscases, setConscases] = useState([]);
+   const styles = useStyles();
 
    const onEditingClick = () => {
       setEditing((prev) => !prev);
@@ -35,16 +45,19 @@ function Conscases({ history }) {
 
    return (
       <>
-         {Editing ? (
-            <>
-               <ConscaseEdit onEditingClick={onEditingClick} />
-            </>
-         ) : (
-            <>
-               <ConscaseList conscases={conscases} history={history} />
-               <button onClick={onEditingClick}>작성</button>
-            </>
-         )}
+         <Navigation />
+         <Container className={styles.content}>
+            {Editing ? (
+               <>
+                  <ConscaseEdit onEditingClick={onEditingClick} />
+               </>
+            ) : (
+               <>
+                  <ConscaseList conscases={conscases} history={history} />
+                  <button onClick={onEditingClick}>작성</button>
+               </>
+            )}
+         </Container>
       </>
    );
 }

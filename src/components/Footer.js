@@ -13,13 +13,13 @@ const useStyles = makeStyles((theme) => ({
 function Footer() {
    const classes = useStyles();
    return (
-      <footer className={classes.footer}>
+      <div className={classes.footer}>
          <Container maxWidth="lg">
             <Typography
                variant="subtitle1"
                align="left"
                color="textSecondary"
-               component="p"
+               component="span"
             >
                <div>
                   조적STS | 대표 신태식 | 문의 : 상단 게시판 혹은
@@ -29,7 +29,7 @@ function Footer() {
                <div>&copy; {new Date().getFullYear()} 조적STS</div>
             </Typography>
          </Container>
-      </footer>
+      </div>
    );
 }
 

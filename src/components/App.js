@@ -9,13 +9,8 @@ function App() {
       <>
          <Container maxWidth="lg">
             <Paper elevation={3}>
-               <div>
-                  <Router />
-               </div>
-
-               <footer>
-                  <Footer />
-               </footer>
+               <Router />
+               <Footer />
             </Paper>
          </Container>
       </>

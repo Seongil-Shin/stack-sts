@@ -9,14 +9,13 @@ const theme = createMuiTheme({
    typography: {
       fontFamily: "Jeju Gothic",
    },
+   button: {},
 });
 ReactDOM.render(
-   <React.StrictMode>
-      <MuiThemeProvider theme={theme}>
-         <Typography>
-            <App />
-         </Typography>
-      </MuiThemeProvider>
-   </React.StrictMode>,
+   <MuiThemeProvider theme={theme}>
+      <Typography component={"span"}>
+         <App />
+      </Typography>
+   </MuiThemeProvider>,
    document.getElementById("root")
 );

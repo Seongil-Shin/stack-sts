@@ -3,9 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
-   mainFeaturedPost: {
+   homePhoto: {
       position: "relative",
-      backgroundColor: "white", //theme.palette.white[800],
+      backgroundColor: "white",
       marginBottom: theme.spacing(10),
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
@@ -17,39 +17,27 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
    const classes = useStyles();
    const [HomePost, setHomePost] = useState({});
+   const images = [
+      process.env.REACT_APP_HOME_1,
+      process.env.REACT_APP_HOME_2,
+      process.env.REACT_APP_HOME_3,
+      process.env.REACT_APP_HOME_4,
+      process.env.REACT_APP_HOME_5,
+   ];
 
    useEffect(() => {
       const homePhotoSwitch = Date.now() % 5;
-      if (homePhotoSwitch === 0) {
-         setHomePost({
-            image: process.env.REACT_APP_HOME_1,
-         });
-      } else if (homePhotoSwitch === 1) {
-         setHomePost({
-            image: process.env.REACT_APP_HOME_2,
-         });
-      } else if (homePhotoSwitch === 2) {
-         setHomePost({
-            image: process.env.REACT_APP_HOME_3,
-         });
-      } else if (homePhotoSwitch === 3) {
-         setHomePost({
-            image: process.env.REACT_APP_HOME_4,
-         });
-      } else if (homePhotoSwitch === 4) {
-         setHomePost({
-            image: process.env.REACT_APP_HOME_5,
-         });
+      for (let i = 0; i < 5; i++) {
+         if (homePhotoSwitch === i) setHomePost({ image: images[i] });
       }
    }, []);
 
    return (
       <Paper
-         className={classes.mainFeaturedPost}
+         className={classes.homePhoto}
          style={{ backgroundImage: `url(${HomePost.image})` }}
-         variant
+         variant="elevation"
       >
-         {/* Increase the priority of the hero background image */}
          {
             <img
                style={{ display: "none" }}

@@ -1,17 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import { Link as ReactLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-   toolbar: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-   },
-   toolbarTitle: {
-      flex: 1,
-   },
    toolbarSecondary: {
       justifyContent: "space-around",
       overflowX: "auto",
@@ -35,11 +29,11 @@ function Header(props) {
 
    return (
       <>
-         <Typography align="center" noWrap>
+         <Box align="center">
             <ReactLink to="/">
                <img src={logoURL} width="455" height="130" alt="error" />
             </ReactLink>
-         </Typography>
+         </Box>
          <Toolbar
             component="nav"
             variant="regular"
