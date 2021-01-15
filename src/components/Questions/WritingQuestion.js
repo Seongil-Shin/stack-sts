@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import Modals from "./Modal";
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-function WritingQuestion({ onToggleQuestion }) {
+function WritingQuestion({ history }) {
    const [question, setQuestion] = useState({
       subject: "",
       password: "",
@@ -43,6 +44,7 @@ function WritingQuestion({ onToggleQuestion }) {
    ]);
    const [showModal, setShowModal] = useState(false);
    const MODAL_TIMESET_FOR_STATE = localStorage.getItem("modalTimeSetForState");
+   const location = useLocation();
    const fileId = useRef(2);
    const styles = useStyles();
 
@@ -54,13 +56,40 @@ function WritingQuestion({ onToggleQuestion }) {
             setShowModal(true);
          }
       };
-
       window.setTimeout(handleShowModal, 500);
 
-      return () => {
-         initialize();
-      };
-   }, [MODAL_TIMESET_FOR_STATE]);
+      if (location.state) {
+         setQuestion((prev) => location.state.question);
+         if (location.state.question.files !== {}) {
+            Object.entries(location.state.question.files).forEach(
+               (file, index) => {
+                  if (index === 0) {
+                     setUploadFiles([
+                        {
+                           id: index,
+                           fileURL: file[1].URL,
+                           fileName: file[1].name,
+                        },
+                     ]);
+                  } else {
+                     setUploadFiles((prev) => [
+                        ...prev,
+                        {
+                           id: index,
+                           fileURL: file[1].URL,
+                           fileName: file[1].name,
+                        },
+                     ]);
+                  }
+               }
+            );
+            fileId.current =
+               Object.entries(location.state.question.files).length + 1;
+         } else {
+            console.log("this");
+         }
+      }
+   }, [MODAL_TIMESET_FOR_STATE, location]);
 
    const onCloseModal = () => {
       setShowModal(false);
@@ -114,20 +143,40 @@ function WritingQuestion({ onToggleQuestion }) {
       if (uploadFiles !== null) {
          for (const file of uploadFiles) {
             if (file.fileURL !== "") {
-               const attachmentRef = storageService
-                  .ref()
-                  .child(`questionFiles/${file.fileName}`);
-               const response = await attachmentRef.putString(
-                  file.fileURL,
-                  "data_url"
-               );
-               const tempFile = {
-                  URL: await response.ref.getDownloadURL(),
-                  name: file.fileName,
-               };
+               let tempFile = {};
+               if (file.fileURL.startsWith("data:")) {
+                  const attachmentRef = storageService
+                     .ref()
+                     .child(`questionFiles/${file.fileName}`);
+                  const response = await attachmentRef.putString(
+                     file.fileURL,
+                     "data_url"
+                  );
+                  tempFile = {
+                     URL: await response.ref.getDownloadURL(),
+                     name: file.fileName,
+                  };
+               } else {
+                  tempFile = {
+                     URL: file.fileURL,
+                     name: file.fileName,
+                  };
+               }
                attachFiles.push(tempFile);
             }
          }
+      }
+      if (location.state) {
+         Object.entries(location.state.question.files).forEach(
+            async (beforeFile) => {
+               let check = false;
+               attachFiles.forEach((afterFile) => {
+                  if (beforeFile[1].URL === afterFile.URL) check = true;
+               });
+               if (!check)
+                  await storageService.refFromURL(beforeFile[1].URL).delete();
+            }
+         );
       }
       const fileObj = Object.assign({}, attachFiles);
       const quesObj = {
@@ -140,9 +189,16 @@ function WritingQuestion({ onToggleQuestion }) {
          answered: false,
          comment: {},
       };
-      await fireStoreService.collection("questions").add(quesObj);
-      onToggleQuestion();
+      if (history.location.pathname === "/qna") {
+         await fireStoreService.collection("questions").add(quesObj);
+      } else {
+         await fireStoreService
+            .collection("questions")
+            .doc(location.state.question.id)
+            .set(quesObj);
+      }
       initialize();
+      history.push("/qna/list");
    };
 
    const onFileDelete = (id, event) => {
@@ -283,7 +339,7 @@ function WritingQuestion({ onToggleQuestion }) {
             </form>
             <br />
             <Button
-               onClick={onToggleQuestion}
+               onClick={() => history.push("/qna/list")}
                color="primary"
                variant="outlined"
             >

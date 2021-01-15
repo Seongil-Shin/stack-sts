@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -12,6 +12,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TablePagination from "@material-ui/core/TablePagination";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import CheckIcon from "@material-ui/icons/Check";
+import { fireStoreService } from "fbase";
 
 const useStyles = makeStyles({
    questionContainer: {},
@@ -26,10 +27,31 @@ const useStyles = makeStyles({
    },
 });
 
-function QuestionList({ onToggleQuestion, questions, history }) {
+function QuestionList({ history }) {
    const [rowsPerPage, setRowsPerPage] = useState(10);
+   const [questions, setQuestions] = useState([]);
    const [page, setPage] = useState(0);
    const styles = useStyles();
+
+   const getQuestions = async () => {
+      const dbQuestions = await fireStoreService
+         .collection("questions")
+         .orderBy("createdAt", "desc")
+         .get();
+      const questionArray = [];
+      dbQuestions.forEach((question) => {
+         const quesObj = {
+            ...question.data(),
+            id: question.id,
+         };
+         questionArray.push(quesObj);
+      });
+      setQuestions((prev) => questionArray);
+   };
+
+   useEffect(() => {
+      getQuestions();
+   }, []);
 
    const onDocumentClick = (question) => {
       history.push({
@@ -52,12 +74,12 @@ function QuestionList({ onToggleQuestion, questions, history }) {
                문의 내역
             </Typography>
             <hr />
-            {history.location.pathname === "/qna" && (
+            {history.location.pathname === "/qna/list" && (
                <Button
                   size="medium"
                   variant="outlined"
                   color="primary"
-                  onClick={onToggleQuestion}
+                  onClick={() => history.push("/qna")}
                   className={styles.questionButton}
                >
                   질문하기

@@ -68,7 +68,7 @@ function QuestionDocument({ history }) {
 
    const onEditClick = () => {
       history.push({
-         pathname: "/qna",
+         pathname: "/qna/list/document/edit",
          state: { question: question },
       });
    };
