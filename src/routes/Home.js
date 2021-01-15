@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
@@ -15,13 +15,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const useInterval = (callback, delay) => {
-   const savedCallback = React.useRef();
+   const savedCallback = useRef();
 
-   React.useEffect(() => {
+   useEffect(() => {
       savedCallback.current = callback;
    }, [callback]);
 
-   React.useEffect(() => {
+   useEffect(() => {
       function tick() {
          savedCallback.current();
       }
@@ -36,13 +36,16 @@ function Home() {
    const classes = useStyles();
    const [HomePost, setHomePost] = useState({});
    const [seconds, setSeconds] = useState(0);
-   const images = [
-      process.env.REACT_APP_HOME_1,
-      process.env.REACT_APP_HOME_2,
-      process.env.REACT_APP_HOME_3,
-      process.env.REACT_APP_HOME_4,
-      process.env.REACT_APP_HOME_5,
-   ];
+   const images = useMemo(
+      () => [
+         process.env.REACT_APP_HOME_1,
+         process.env.REACT_APP_HOME_2,
+         process.env.REACT_APP_HOME_3,
+         process.env.REACT_APP_HOME_4,
+         process.env.REACT_APP_HOME_5,
+      ],
+      []
+   );
 
    useInterval(() => {
       setSeconds((prev) => prev + 1);
@@ -54,7 +57,7 @@ function Home() {
       for (let i = 0; i < 5; i++) {
          if (homePhotoSwitch === i) setHomePost({ image: images[i] });
       }
-   }, []);
+   }, [images]);
 
    return (
       <Paper

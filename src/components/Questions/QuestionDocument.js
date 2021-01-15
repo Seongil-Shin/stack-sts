@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import CheckPassword from "components/CheckPassword";
-import { fireStoreService } from "fbase";
+import { fireStoreService, storageService } from "fbase";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -66,6 +66,12 @@ function QuestionDocument({ history }) {
       setComments(question.comment);
    }, [question.comment]);
 
+   const onEditClick = () => {
+      history.push({
+         pathname: "/qna",
+         state: { question: question },
+      });
+   };
    const onToggleIsPassword = () => {
       setIsPassword((prev) => !prev);
    };
@@ -76,6 +82,9 @@ function QuestionDocument({ history }) {
       const ok = window.confirm("정말로 삭제하시겠습니까?");
       if (ok) {
          await fireStoreService.doc(`questions/${question.id}`).delete();
+         Object.values(question.files).map(async (file) => {
+            await storageService.refFromURL(file.URL).delete();
+         });
          goBack();
       }
    };
@@ -182,6 +191,7 @@ function QuestionDocument({ history }) {
                               size="small"
                               variant="outlined"
                               color="primary"
+                              onClick={onEditClick}
                            >
                               수정
                            </Button>

@@ -87,7 +87,7 @@ function QuestionList({ onToggleQuestion, questions, history }) {
                               key={index}
                               onClick={() => onDocumentClick(question)}
                               className={
-                                 question.answered && styles.answeredRow
+                                 question.answered ? styles.answeredRow : null
                               }
                            >
                               <TableCell>{question.subject}</TableCell>

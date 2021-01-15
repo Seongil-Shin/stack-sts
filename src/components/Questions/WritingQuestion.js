@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import Modals from "./Modal";
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -40,14 +41,30 @@ function WritingQuestion({ onToggleQuestion }) {
          fileName: "",
       },
    ]);
+   const [showModal, setShowModal] = useState(false);
+   const MODAL_TIMESET_FOR_STATE = localStorage.getItem("modalTimeSetForState");
    const fileId = useRef(2);
    const styles = useStyles();
 
    useEffect(() => {
+      const handleShowModal = () => {
+         if (MODAL_TIMESET_FOR_STATE && MODAL_TIMESET_FOR_STATE > new Date()) {
+            return;
+         } else {
+            setShowModal(true);
+         }
+      };
+
+      window.setTimeout(handleShowModal, 500);
+
       return () => {
          initialize();
       };
-   }, []);
+   }, [MODAL_TIMESET_FOR_STATE]);
+
+   const onCloseModal = () => {
+      setShowModal(false);
+   };
 
    const onChange = (event) => {
       const {
@@ -151,6 +168,7 @@ function WritingQuestion({ onToggleQuestion }) {
 
    return (
       <>
+         <Modals showModal={showModal} onCloseModal={onCloseModal} />
          <Container maxWidth="md" className={styles.container}>
             <form onSubmit={onSubmit}>
                <TextField

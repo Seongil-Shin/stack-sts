@@ -14,6 +14,7 @@ import Container from "@material-ui/core/Container";
 
 function AdminIndex() {
    const [userId, setUserId] = useState("");
+
    const CustomRoute = (props) => {
       if (userId === process.env.REACT_APP_ADMIN_UID) {
          return <Route {...props} />;
