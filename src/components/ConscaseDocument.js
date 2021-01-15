@@ -11,9 +11,6 @@ function ConscaseDocument({ history }) {
    const conscaseId = location.state.conscaseId;
    const [init, setInit] = useState(false);
    const [conscase, setConscase] = useState({});
-   const goBack = () => {
-      history.goBack();
-   };
 
    const getConscases = async () => {
       const dbconscases = await fireStoreService
@@ -24,11 +21,18 @@ function ConscaseDocument({ history }) {
       setInit(true);
    };
 
+   const onEditClick = () => {
+      history.push({
+         pathname: "/admin/conscase/edit",
+         state: { conscase: conscase },
+      });
+   };
+
    const onDelete = async () => {
       const ok = window.confirm("정말로 삭제하시겠습니까?");
       if (ok) {
          await fireStoreService.doc(`conscase/${conscaseId}`).delete();
-         goBack();
+         history.goBack();
       }
    };
 
@@ -52,7 +56,7 @@ function ConscaseDocument({ history }) {
                   <Box ml={2} overflow="auto">
                      <div dangerouslySetInnerHTML={{ __html: conscase.html }} />
                      <Button
-                        onClick={goBack}
+                        onClick={() => history.goBack()}
                         color="primary"
                         variant="outlined"
                      >
@@ -62,7 +66,11 @@ function ConscaseDocument({ history }) {
                      <br />
                      {location.pathname === "/admin/conscase/document" && (
                         <div>
-                           <Button color="primary" variant="outlined">
+                           <Button
+                              color="primary"
+                              variant="outlined"
+                              onClick={onEditClick}
+                           >
                               &nbsp;&nbsp;&nbsp;수정&nbsp;&nbsp;&nbsp;
                            </Button>
                            &nbsp;&nbsp;&nbsp;
@@ -80,7 +88,7 @@ function ConscaseDocument({ history }) {
             </>
          ) : (
             <>
-               <div>initializing...</div>
+               <div>잠시만 기다려주세요...</div>
             </>
          )}
       </>

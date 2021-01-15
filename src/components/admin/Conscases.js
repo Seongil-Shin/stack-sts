@@ -1,7 +1,6 @@
 import ConscaseList from "components/ConscaseList";
 import { fireStoreService } from "fbase";
 import React, { useEffect, useState } from "react";
-import ConscaseEdit from "./ConscaseEdit";
 import Navigation from "./Navigation";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,12 +13,11 @@ const useStyles = makeStyles({
 });
 
 function Conscases({ history }) {
-   const [Editing, setEditing] = useState(false);
    const [conscases, setConscases] = useState([]);
    const styles = useStyles();
 
    const onEditingClick = () => {
-      setEditing((prev) => !prev);
+      history.push("/admin/conscase/edit");
    };
 
    const getConscases = async () => {
@@ -48,22 +46,10 @@ function Conscases({ history }) {
       <>
          <Navigation />
          <Container className={styles.content}>
-            {Editing ? (
-               <>
-                  <ConscaseEdit onEditingClick={onEditingClick} />
-               </>
-            ) : (
-               <>
-                  <ConscaseList conscases={conscases} history={history} />
-                  <Button
-                     color="primary"
-                     variant="outlined"
-                     onClick={onEditingClick}
-                  >
-                     작성
-                  </Button>
-               </>
-            )}
+            <ConscaseList conscases={conscases} history={history} />
+            <Button color="primary" variant="outlined" onClick={onEditingClick}>
+               작성
+            </Button>
          </Container>
       </>
    );

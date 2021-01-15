@@ -11,6 +11,7 @@ import { useState } from "react";
 import ConscaseDocument from "components/ConscaseDocument";
 import QuestionDocument from "components/Questions/QuestionDocument";
 import Container from "@material-ui/core/Container";
+import ConscaseEdit from "components/admin/ConscaseEdit";
 
 function AdminIndex() {
    const [userId, setUserId] = useState("");
@@ -33,6 +34,12 @@ function AdminIndex() {
                      <Admin userId={userId} setUserId={setUserId} />
                   </Route>
                   <CustomRoute
+                     exact
+                     path="/admin/conscase/edit"
+                     component={ConscaseEdit}
+                  />
+                  <CustomRoute
+                     exact
                      path="/admin/conscase/document"
                      component={ConscaseDocument}
                   />

@@ -8,6 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
    subject: {
@@ -21,13 +22,16 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-function ConscaseEdit({ onEditingClick }) {
+function ConscaseEdit() {
    const styles = useStyles();
    const [subject, setSubject] = useState("");
    const [check, setCheck] = useState(false);
    const [editorToHtml, setEditorToHTML] = useState(null);
    const [editorState, setEditorState] = useState(EditorState.createEmpty());
    const [thumbnail, setThumbnail] = useState("");
+   const history = useHistory();
+   const location = useLocation();
+   console.log(location);
 
    const onSubmit = async (event) => {
       event.preventDefault();
@@ -41,7 +45,7 @@ function ConscaseEdit({ onEditingClick }) {
          thumbnail: thumbnail,
       };
       await fireStoreService.collection("conscase").add(conscaseObj);
-      onEditingClick();
+      history.push("/admin/conscase");
    };
    const onChange = (event) => {
       const {
@@ -116,7 +120,7 @@ function ConscaseEdit({ onEditingClick }) {
             size="small"
             color="primary"
             variant="outlined"
-            onClick={onEditingClick}
+            onClick={() => history.push("/admin/conscase")}
          >
             등록 취소
          </Button>
