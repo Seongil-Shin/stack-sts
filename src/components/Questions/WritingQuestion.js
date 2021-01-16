@@ -50,11 +50,9 @@ function WritingQuestion({ history }) {
 
    useEffect(() => {
       const handleShowModal = () => {
-         if (MODAL_TIMESET_FOR_STATE && MODAL_TIMESET_FOR_STATE > new Date()) {
+         if (MODAL_TIMESET_FOR_STATE && MODAL_TIMESET_FOR_STATE > new Date())
             return;
-         } else {
-            setShowModal(true);
-         }
+         else setShowModal(true);
       };
       window.setTimeout(handleShowModal, 500);
 

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "css/react-draft-wysiwyg.css";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 import { fireStoreService } from "fbase";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
@@ -31,7 +32,22 @@ function ConscaseEdit() {
    const [thumbnail, setThumbnail] = useState("");
    const history = useHistory();
    const location = useLocation();
-   console.log(location);
+
+   useEffect(() => {
+      if (location.state) {
+         setSubject(location.state.conscase.subject);
+         setThumbnail(location.state.conscase.thumbnail);
+         const { contentBlocks, entityMap } = htmlToDraft(
+            location.state.conscase.html
+         );
+         const contentState = ContentState.createFromBlockArray(
+            contentBlocks,
+            entityMap
+         );
+         const editorState = EditorState.createWithContent(contentState);
+         setEditorState(editorState);
+      }
+   }, [location]);
 
    const onSubmit = async (event) => {
       event.preventDefault();
@@ -44,7 +60,15 @@ function ConscaseEdit() {
          createdAt: Date.now(),
          thumbnail: thumbnail,
       };
-      await fireStoreService.collection("conscase").add(conscaseObj);
+
+      if (location.state) {
+         await fireStoreService
+            .collection("conscase")
+            .doc(location.state.id)
+            .set(conscaseObj);
+      } else {
+         await fireStoreService.collection("conscase").add(conscaseObj);
+      }
       history.push("/admin/conscase");
    };
    const onChange = (event) => {
