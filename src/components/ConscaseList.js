@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ConscaseList({ conscases, history }) {
-   const pages = useRef(1);
+   const [pages, setPages] = useState(1);
    const onDocumentClick = (conscaseId) => {
       history.push({
          pathname: history.location.pathname + "/document",
@@ -52,7 +52,7 @@ function ConscaseList({ conscases, history }) {
    const classes = useStyles();
 
    const onSeeMoreClick = () => {
-      pages.current += 1;
+      setPages((prev) => prev + 1);
    };
    return (
       <>
@@ -73,38 +73,36 @@ function ConscaseList({ conscases, history }) {
             </div>
             <Container className={classes.listContainer} maxWidth="md">
                <Grid container spacing={4}>
-                  {conscases
-                     .slice(0, pages.current * 6)
-                     .map((conscase, index) => {
-                        return (
-                           <Grid
-                              item
-                              key={index}
-                              xs={12}
-                              sm={6}
-                              md={4}
-                              onClick={() => onDocumentClick(conscase.id)}
-                           >
-                              <Card className={classes.card}>
-                                 <CardMedia
-                                    className={classes.cardMedia}
-                                    image={conscase.thumbnail}
-                                    title="Image title"
-                                 />
+                  {conscases.slice(0, pages * 6).map((conscase, index) => {
+                     return (
+                        <Grid
+                           item
+                           key={index}
+                           xs={12}
+                           sm={6}
+                           md={4}
+                           onClick={() => onDocumentClick(conscase.id)}
+                        >
+                           <Card className={classes.card}>
+                              <CardMedia
+                                 className={classes.cardMedia}
+                                 image={conscase.thumbnail}
+                                 title="Image title"
+                              />
 
-                                 <CardContent className={classes.cardContent}>
-                                    <Typography
-                                       gutterBottom
-                                       variant="h5"
-                                       component="h2"
-                                    >
-                                       {conscase.subject}
-                                    </Typography>
-                                 </CardContent>
-                              </Card>
-                           </Grid>
-                        );
-                     })}
+                              <CardContent className={classes.cardContent}>
+                                 <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="h2"
+                                 >
+                                    {conscase.subject}
+                                 </Typography>
+                              </CardContent>
+                           </Card>
+                        </Grid>
+                     );
+                  })}
                </Grid>
                <footer className={classes.footer} align="center">
                   <Button

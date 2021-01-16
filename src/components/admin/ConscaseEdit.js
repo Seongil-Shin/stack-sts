@@ -27,12 +27,11 @@ function ConscaseEdit() {
    const styles = useStyles();
    const [subject, setSubject] = useState("");
    const [check, setCheck] = useState(false);
-   const [editorToHtml, setEditorToHTML] = useState(null);
+   const [editorToHtml, setEditorToHTML] = useState({});
    const [editorState, setEditorState] = useState(EditorState.createEmpty());
    const [thumbnail, setThumbnail] = useState("");
    const history = useHistory();
    const location = useLocation();
-
    useEffect(() => {
       if (location.state) {
          setSubject(location.state.conscase.subject);
@@ -51,16 +50,12 @@ function ConscaseEdit() {
 
    const onSubmit = async (event) => {
       event.preventDefault();
-      setEditorToHTML(
-         draftToHtml(convertToRaw(editorState.getCurrentContent()))
-      );
       const conscaseObj = {
          subject: subject,
-         html: editorToHtml,
+         html: draftToHtml(convertToRaw(editorState.getCurrentContent())),
          createdAt: Date.now(),
          thumbnail: thumbnail,
       };
-
       if (location.state) {
          await fireStoreService
             .collection("conscase")
@@ -166,7 +161,7 @@ function ConscaseEdit() {
                borderRadius={13}
                borderColor="grey.500"
             >
-               <Box disableGutters className={styles.checkContent}>
+               <Box className={styles.checkContent}>
                   <div dangerouslySetInnerHTML={{ __html: editorToHtml }} />
                </Box>
                <Button color="primary" variant="outlined" onClick={onUnCheck}>
