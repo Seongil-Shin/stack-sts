@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import CheckPassword from "components/CheckPassword";
 import { fireStoreService, storageService } from "fbase";
@@ -59,7 +59,34 @@ function QuestionDocument({ history }) {
    );
    const [newComment, setNewComment] = useState("");
    const [comments, setComments] = useState(question.comment);
-   const nextCommentId = useRef(Object.keys(comments).length);
+   const [nextCommentId, setNextComment] = useState(
+      Object.keys(comments).length
+   );
+   const getDate = (date) => {
+      const months = [
+         "01",
+         "02",
+         "03",
+         "04",
+         "05",
+         "06",
+         "07",
+         "08",
+         "09",
+         "10",
+         "11",
+         "12",
+      ];
+
+      return (
+         date.getYear() -
+         100 +
+         "/" +
+         months[date.getUTCMonth()] +
+         "/" +
+         (date.getUTCDate() < 10 ? "0" + date.getUTCDate() : date.getUTCDate())
+      );
+   };
    const styles = useStyles();
 
    useEffect(() => {
@@ -96,27 +123,31 @@ function QuestionDocument({ history }) {
          newCommentObj = {
             comment: newComment,
             createdAt: Date.now(),
-            isAdmin: false,
+            isAdmin:
+               history.location.pathname === "/admin/questions/document"
+                  ? true
+                  : false,
          };
+         const questionObj = {
+            ...question,
+            comment: { ...comments, [nextCommentId]: newCommentObj },
+            answered:
+               history.location.pathname === "/admin/questions/document"
+                  ? true
+                  : false,
+         };
+         await fireStoreService
+            .collection("questions")
+            .doc(question.id)
+            .set(questionObj);
+
          setComments((prev) => ({
             ...comments,
-            [nextCommentId.current]: newCommentObj,
+            [nextCommentId]: newCommentObj,
          }));
+         setNewComment((prev) => "");
+         setNextComment((prev) => prev + 1);
       }
-      const questionObj = {
-         ...question,
-         comment: { ...comments, [nextCommentId.current]: newCommentObj },
-         answered:
-            history.location.pathname === "/admin/questions/document"
-               ? true
-               : false,
-      };
-      await fireStoreService
-         .collection("questions")
-         .doc(question.id)
-         .set(questionObj);
-      setNewComment((prev) => "");
-      nextCommentId.current += 1;
    };
    const onChange = (event) => {
       const {
@@ -237,10 +268,14 @@ function QuestionDocument({ history }) {
                                  className={styles.exComment}
                               >
                                  <Box className={styles.exCommentWriter}>
-                                    작성자
+                                    {!comment.isAdmin
+                                       ? question.password !== ""
+                                          ? question.writer
+                                          : "익명"
+                                       : "관리자"}
                                  </Box>
                                  <Box className={styles.exCommentDate}>
-                                    {comment.createdAt}
+                                    {getDate(new Date(comment.createdAt))}
                                  </Box>
                                  <br />
                                  <Box className={styles.exCommentContent}>
