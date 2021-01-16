@@ -12,15 +12,6 @@ function ConscaseDocument({ history }) {
    const [init, setInit] = useState(false);
    const [conscase, setConscase] = useState({});
 
-   const getConscases = async () => {
-      const dbconscases = await fireStoreService
-         .collection("conscase")
-         .doc(conscaseId)
-         .get();
-      setConscase((prev) => dbconscases.data());
-      setInit(true);
-   };
-
    const onEditClick = () => {
       history.push({
          pathname: "/admin/conscase/edit",
@@ -37,11 +28,19 @@ function ConscaseDocument({ history }) {
    };
 
    useEffect(() => {
+      async function getConscases() {
+         const dbconscases = await fireStoreService
+            .collection("conscase")
+            .doc(conscaseId)
+            .get();
+         setConscase((prev) => dbconscases.data());
+         setInit(true);
+      }
       getConscases();
       return () => {
          setConscase({});
       };
-   }, []);
+   }, [conscaseId]);
 
    return (
       <>
