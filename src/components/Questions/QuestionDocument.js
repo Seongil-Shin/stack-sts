@@ -96,7 +96,7 @@ function QuestionDocument({ history }) {
    const onEditClick = () => {
       history.push({
          pathname: "/qna/list/document/edit",
-         state: { question: question },
+         state: { question: question, comment: comments },
       });
    };
    const onToggleIsPassword = () => {

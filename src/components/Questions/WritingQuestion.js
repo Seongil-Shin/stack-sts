@@ -164,6 +164,7 @@ function WritingQuestion({ history }) {
             }
          }
       }
+      let commentObj = {};
       if (location.state) {
          Object.entries(location.state.question.files).forEach(
             async (beforeFile) => {
@@ -175,6 +176,9 @@ function WritingQuestion({ history }) {
                   await storageService.refFromURL(beforeFile[1].URL).delete();
             }
          );
+         console.log(location.state.comment);
+         commentObj = location.state.comment;
+         console.log(commentObj);
       }
       const fileObj = Object.assign({}, attachFiles);
       const quesObj = {
@@ -185,8 +189,9 @@ function WritingQuestion({ history }) {
          createdAt: Date.now(),
          files: fileObj,
          answered: false,
-         comment: {},
+         comment: commentObj,
       };
+
       if (history.location.pathname === "/qna") {
          await fireStoreService.collection("questions").add(quesObj);
       } else {
