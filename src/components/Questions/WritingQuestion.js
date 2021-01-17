@@ -176,9 +176,7 @@ function WritingQuestion({ history }) {
                   await storageService.refFromURL(beforeFile[1].URL).delete();
             }
          );
-         console.log(location.state.comment);
          commentObj = location.state.comment;
-         console.log(commentObj);
       }
       const fileObj = Object.assign({}, attachFiles);
       const quesObj = {
