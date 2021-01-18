@@ -24,7 +24,7 @@ function AdminIndex() {
    };
 
    return (
-      <div>
+      <>
          <br />
          <br />
          <Router>
@@ -35,13 +35,13 @@ function AdminIndex() {
                   </Route>
                   <CustomRoute
                      exact
-                     path="/admin/conscase/edit"
-                     component={ConscaseEdit}
+                     path="/admin/conscase/document"
+                     component={ConscaseDocument}
                   />
                   <CustomRoute
                      exact
-                     path="/admin/conscase/document"
-                     component={ConscaseDocument}
+                     path="/admin/conscase/document/edit"
+                     component={ConscaseEdit}
                   />
                   <CustomRoute
                      exact
@@ -60,7 +60,7 @@ function AdminIndex() {
                </Switch>
             </Container>
          </Router>
-      </div>
+      </>
    );
 }
 export default AdminIndex;

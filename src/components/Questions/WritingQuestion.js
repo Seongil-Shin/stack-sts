@@ -34,64 +34,44 @@ function WritingQuestion({ history }) {
       text: "",
       writer: "",
    });
-   const [isPassword, setIsPassword] = useState(true);
-   const [uploadFiles, setUploadFiles] = useState([
-      {
-         id: 1,
-         fileURL: "",
-         fileName: "",
-      },
-   ]);
-   const [showModal, setShowModal] = useState(false);
-   const MODAL_TIMESET_FOR_STATE = localStorage.getItem("modalTimeSetForState");
+   const [isPassword, setIsPassword] = useState(true); //비밀 번호를 설정할 것인지 확인하는 state
+   //현재 쓰기 모드일 때, 업로드 된 파일들. submit 시 여기있는 파일들이 question과 함께 questionObj에 들어가서 업로드 됨.
+   const [uploadFiles, setUploadFiles] = useState([]);
    const location = useLocation();
    const fileId = useRef(2);
    const styles = useStyles();
 
    useEffect(() => {
-      const handleShowModal = () => {
-         if (MODAL_TIMESET_FOR_STATE && MODAL_TIMESET_FOR_STATE > new Date())
-            return;
-         else setShowModal(true);
-      };
-      window.setTimeout(handleShowModal, 500);
-
+      //수정 시 location.state안에 question에 수정할 question 객체가 들어있음.
+      //없을 경우 첫 작성 모드. uploadFiles를 초기상태로 셋팅
       if (location.state) {
          setQuestion((prev) => location.state.question);
          if (location.state.question.files !== {}) {
             Object.entries(location.state.question.files).forEach(
                (file, index) => {
-                  if (index === 0) {
-                     setUploadFiles([
-                        {
-                           id: index,
-                           fileURL: file[1].URL,
-                           fileName: file[1].name,
-                        },
-                     ]);
-                  } else {
-                     setUploadFiles((prev) => [
-                        ...prev,
-                        {
-                           id: index,
-                           fileURL: file[1].URL,
-                           fileName: file[1].name,
-                        },
-                     ]);
-                  }
+                  setUploadFiles((prev) => [
+                     ...prev,
+                     {
+                        id: index,
+                        fileURL: file[1].URL,
+                        fileName: file[1].name,
+                     },
+                  ]);
                }
             );
             fileId.current =
                Object.entries(location.state.question.files).length + 1;
-         } else {
-            console.log("this");
          }
+      } else {
+         setUploadFiles([
+            {
+               id: 1,
+               fileURL: "",
+               fileName: "",
+            },
+         ]);
       }
-   }, [MODAL_TIMESET_FOR_STATE, location]);
-
-   const onCloseModal = () => {
-      setShowModal(false);
-   };
+   }, [location]);
 
    const onChange = (event) => {
       const {
@@ -142,6 +122,7 @@ function WritingQuestion({ history }) {
          for (const file of uploadFiles) {
             if (file.fileURL !== "") {
                let tempFile = {};
+               //data로 시작되면 첫작성모드이며 스토리지에 업로드 되지않은 것.
                if (file.fileURL.startsWith("data:")) {
                   const attachmentRef = storageService
                      .ref()
@@ -165,6 +146,8 @@ function WritingQuestion({ history }) {
          }
       }
       let commentObj = {};
+      //수정 모드일시, 이전에 있던 파일을 삭제했다면 스토리지에서도 지우기.
+      //코멘트는 이전에 있던거 그대로 넣기
       if (location.state) {
          Object.entries(location.state.question.files).forEach(
             async (beforeFile) => {
@@ -190,9 +173,10 @@ function WritingQuestion({ history }) {
          comment: commentObj,
       };
 
-      if (history.location.pathname === "/qna") {
+      if (!location.state) {
          await fireStoreService.collection("questions").add(quesObj);
       } else {
+         console.log(location.state.question.id);
          await fireStoreService
             .collection("questions")
             .doc(location.state.question.id)
@@ -225,7 +209,7 @@ function WritingQuestion({ history }) {
 
    return (
       <>
-         <Modals showModal={showModal} onCloseModal={onCloseModal} />
+         <Modals />
          <Container maxWidth="md" className={styles.container}>
             <form onSubmit={onSubmit}>
                <TextField

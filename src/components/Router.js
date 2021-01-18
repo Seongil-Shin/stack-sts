@@ -10,7 +10,7 @@ import Header from "./Header";
 function AppRouter() {
    return (
       <Router>
-         <Header title="Blog" />
+         <Header />
          <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/greeting" component={Greeting} />

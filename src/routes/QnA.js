@@ -9,7 +9,7 @@ function QnA() {
    const history = useHistory();
 
    return (
-      <div>
+      <>
          <Switch>
             <Route exact path="/qna">
                <WritingQuestion history={history} />
@@ -25,7 +25,7 @@ function QnA() {
             </Route>
             <Redirect from="*" to="/qna" />
          </Switch>
-      </div>
+      </>
    );
 }
 export default QnA;

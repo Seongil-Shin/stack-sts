@@ -37,7 +37,8 @@ function Greeting() {
                   image={profilePhoto}
                   title="Image title"
                />
-               <Box ml={2}>
+               <Box components="div" ml={2}>
+                  <br />
                   조적STS를 방문해주신 모든 여러분, 감사합니다.
                   <br />
                   <br />

@@ -14,7 +14,7 @@ function ConscaseDocument({ history }) {
 
    const onEditClick = () => {
       history.push({
-         pathname: "/admin/conscase/edit",
+         pathname: "/admin/conscase/document/edit",
          state: { conscase: conscase, id: conscaseId },
       });
    };

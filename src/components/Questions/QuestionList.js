@@ -15,7 +15,6 @@ import CheckIcon from "@material-ui/icons/Check";
 import { fireStoreService } from "fbase";
 
 const useStyles = makeStyles({
-   questionContainer: {},
    questionButton: {
       float: "left",
    },

@@ -6,14 +6,12 @@ import Footer from "components/Footer";
 
 function App() {
    return (
-      <>
-         <Container maxWidth="lg">
-            <Paper elevation={3}>
-               <Router />
-               <Footer />
-            </Paper>
-         </Container>
-      </>
+      <Container maxWidth="lg">
+         <Paper elevation={3}>
+            <Router />
+            <Footer />
+         </Paper>
+      </Container>
    );
 }
 

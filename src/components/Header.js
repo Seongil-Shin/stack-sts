@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
    toolbarLink: {
       padding: theme.spacing(1),
       fontSize: "23px",
-      flexShrink: 0,
+      flexShrink: 1,
    },
 }));
 
-function Header(props) {
+function Header() {
    const classes = useStyles();
    const sections = [
       { title: "홈", url: "/" },
@@ -25,13 +25,13 @@ function Header(props) {
       { title: "시공사례", url: "/conscase" },
       { title: "문의", url: "/qna" },
    ];
-   const logoURL = process.env.REACT_APP_FULL_LOGO_PATH;
+   const logoImageURL = process.env.REACT_APP_FULL_LOGO_PATH;
 
    return (
       <>
          <Box align="center">
             <ReactLink to="/">
-               <img src={logoURL} width="455" height="130" alt="error" />
+               <img src={logoImageURL} width="455" height="130" alt="조적STS" />
             </ReactLink>
          </Box>
          <Toolbar
@@ -42,7 +42,6 @@ function Header(props) {
             {sections.map((section) => (
                <Link
                   color="inherit"
-                  noWrap
                   key={section.title}
                   variant="inherit"
                   href={section.url}

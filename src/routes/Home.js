@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 const useStyles = makeStyles((theme) => ({
    homePhoto: {
       position: "relative",
-      backgroundColor: "white",
       marginBottom: theme.spacing(10),
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
@@ -34,7 +33,7 @@ const useInterval = (callback, delay) => {
 
 function Home() {
    const classes = useStyles();
-   const [HomePost, setHomePost] = useState({});
+   const [currentPhoto, setCurrentPhoto] = useState(Date.now() % 5);
    const [seconds, setSeconds] = useState(0);
    const images = useMemo(
       () => [
@@ -49,30 +48,15 @@ function Home() {
 
    useInterval(() => {
       setSeconds((prev) => prev + 1);
-      setHomePost({ image: images[seconds % 5] });
+      setCurrentPhoto(seconds % 5);
    }, 10000);
-
-   useEffect(() => {
-      const homePhotoSwitch = Date.now() % 5;
-      for (let i = 0; i < 5; i++) {
-         if (homePhotoSwitch === i) setHomePost({ image: images[i] });
-      }
-   }, [images]);
 
    return (
       <Paper
          className={classes.homePhoto}
-         style={{ backgroundImage: `url(${HomePost.image})` }}
+         style={{ backgroundImage: `url(${images[currentPhoto]})` }}
          variant="elevation"
-      >
-         {
-            <img
-               style={{ display: "none" }}
-               src={HomePost.image}
-               alt={HomePost.imageText}
-            />
-         }
-      </Paper>
+      />
    );
 }
 
