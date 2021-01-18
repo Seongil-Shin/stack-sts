@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { storageService, fireStoreService } from "fbase";
+import { v4 as uuidv4 } from "uuid";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import TextField from "@material-ui/core/TextField";
@@ -9,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import Typography from "@material-ui/core/Typography";
 import Modals from "./Modal";
 import { useLocation } from "react-router-dom";
 
@@ -37,6 +39,7 @@ function WritingQuestion({ history }) {
    const [isPassword, setIsPassword] = useState(true); //비밀 번호를 설정할 것인지 확인하는 state
    //현재 쓰기 모드일 때, 업로드 된 파일들. submit 시 여기있는 파일들이 question과 함께 questionObj에 들어가서 업로드 됨.
    const [uploadFiles, setUploadFiles] = useState([]);
+   const [isWriting, setIsWriting] = useState(true);
    const location = useLocation();
    const fileId = useRef(2);
    const styles = useStyles();
@@ -117,6 +120,7 @@ function WritingQuestion({ history }) {
 
    const onSubmit = async (event) => {
       event.preventDefault();
+      setIsWriting(false);
       const attachFiles = [];
       if (uploadFiles !== null) {
          for (const file of uploadFiles) {
@@ -126,7 +130,7 @@ function WritingQuestion({ history }) {
                if (file.fileURL.startsWith("data:")) {
                   const attachmentRef = storageService
                      .ref()
-                     .child(`questionFiles/${file.fileName}`);
+                     .child(`questionFiles/${uuidv4()}`);
                   const response = await attachmentRef.putString(
                      file.fileURL,
                      "data_url"
@@ -176,7 +180,6 @@ function WritingQuestion({ history }) {
       if (!location.state) {
          await fireStoreService.collection("questions").add(quesObj);
       } else {
-         console.log(location.state.question.id);
          await fireStoreService
             .collection("questions")
             .doc(location.state.question.id)
@@ -210,127 +213,137 @@ function WritingQuestion({ history }) {
    return (
       <>
          <Modals />
-         <Container maxWidth="md" className={styles.container}>
-            <form onSubmit={onSubmit}>
-               <TextField
-                  id="subject"
-                  value={question.subject}
-                  name="subject"
-                  onChange={onChange}
-                  label="제목"
-                  maxLength={120}
-                  className={styles.subject}
-                  required
-               />
-               <br /> <br />
-               <TextField
-                  id="writer"
-                  value={question.writer}
-                  name="writer"
-                  onChange={onChange}
-                  label="작성자"
-                  maxLength={120}
-                  className={styles.writer}
-                  required
-               />
-               <br /> <br />
-               비밀번호 :{" "}
-               <Checkbox
-                  id="isChecked"
-                  onChange={onToggleIsPassword}
-                  checked={isPassword}
-                  color="primary"
-               />
-               <br />
-               {isPassword ? (
+         {isWriting ? (
+            <Container maxWidth="md" className={styles.container}>
+               <form onSubmit={onSubmit}>
                   <TextField
-                     id="password"
-                     type="password"
-                     name="password"
+                     id="subject"
+                     value={question.subject}
+                     name="subject"
                      onChange={onChange}
-                     value={question.password}
-                     maxLength={15}
+                     label="제목"
+                     maxLength={120}
+                     className={styles.subject}
                      required
                   />
-               ) : (
-                  <Alert variant="outlined" severity="warning">
-                     비밀번호 미설정 시 문의 삭제 및 수정은 관리자를 통해서만
-                     가능합니다.
-                  </Alert>
-               )}
-               <br />
-               <br />
-               <h4> 내용 </h4>
-               <TextField
-                  id="content"
-                  name="text"
-                  value={question.text}
-                  onChange={onChange}
-                  multiline
-                  rows="21"
-                  className={styles.content}
-                  placeholder="*형식 내용 상관없이 모든 문의 가능합니다.
+                  <br /> <br />
+                  <TextField
+                     id="writer"
+                     value={question.writer}
+                     name="writer"
+                     onChange={onChange}
+                     label="작성자"
+                     maxLength={120}
+                     className={styles.writer}
+                     required
+                  />
+                  <br /> <br />
+                  비밀번호 :{" "}
+                  <Checkbox
+                     id="isChecked"
+                     onChange={onToggleIsPassword}
+                     checked={isPassword}
+                     color="primary"
+                  />
+                  <br />
+                  {isPassword ? (
+                     <TextField
+                        id="password"
+                        type="password"
+                        name="password"
+                        onChange={onChange}
+                        value={question.password}
+                        maxLength={15}
+                        required
+                     />
+                  ) : (
+                     <Alert variant="outlined" severity="warning">
+                        비밀번호 미설정 시 문의 삭제 및 수정은 관리자를 통해서만
+                        가능합니다.
+                     </Alert>
+                  )}
+                  <br />
+                  <br />
+                  <h4> 내용 </h4>
+                  <TextField
+                     id="content"
+                     name="text"
+                     value={question.text}
+                     onChange={onChange}
+                     multiline
+                     rows="21"
+                     className={styles.content}
+                     placeholder="*형식 내용 상관없이 모든 문의 가능합니다.
 *이메일, 전화번호, 카카오톡 ID 등 어떤 연락처라도 남겨주시면, 그쪽으로 답변드리겠습니다.
 *연락처가 없을 시, 댓글로 답변드리겠습니다."
-                  required
-               />
-               <br />
-               <br />
-               <Container>
-                  {uploadFiles.map((file, index) => (
-                     <label key={index}>
-                        <input
-                           type={"file"}
-                           style={{ display: "none" }}
-                           onChange={(e) => onFileChange(file.id, e)}
-                        />
-                        <Button
-                           variant="outlined"
-                           size="small"
-                           color="primary"
-                           component="span"
-                        >
-                           파일선택
-                        </Button>
+                     required
+                  />
+                  <br />
+                  <br />
+                  <Container>
+                     {uploadFiles.map((file, index) => (
+                        <label key={index}>
+                           <input
+                              type={"file"}
+                              style={{ display: "none" }}
+                              onChange={(e) => onFileChange(file.id, e)}
+                           />
+                           <Button
+                              variant="outlined"
+                              size="small"
+                              color="primary"
+                              component="span"
+                           >
+                              파일선택
+                           </Button>
 
-                        {file.fileName !== null && (
-                           <span> {file.fileName}</span>
-                        )}
-                        <IconButton
-                           aria-label="delete"
-                           color="secondary"
-                           size="small"
-                           onClick={(e) => onFileDelete(file.id, e)}
+                           {file.fileName !== null && (
+                              <span> {file.fileName}</span>
+                           )}
+                           <IconButton
+                              aria-label="delete"
+                              color="secondary"
+                              size="small"
+                              onClick={(e) => onFileDelete(file.id, e)}
+                           >
+                              <DeleteOutlinedIcon />
+                           </IconButton>
+                           <br />
+                        </label>
+                     ))}
+                     &nbsp;
+                     <Box ml={14}>
+                        <Button
+                           color="primary"
+                           variant="outlined"
+                           onClick={onAddFile}
                         >
-                           <DeleteOutlinedIcon />
-                        </IconButton>
-                        <br />
-                     </label>
-                  ))}
-                  &nbsp;
-                  <Box ml={14}>
-                     <Button
-                        color="primary"
-                        variant="outlined"
-                        onClick={onAddFile}
-                     >
-                        파일 개수 추가
-                     </Button>
-                  </Box>
-               </Container>
-               <Button type="submit" color="primary" variant="outlined">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           파일 개수 추가
+                        </Button>
+                     </Box>
+                  </Container>
+                  <Button type="submit" color="primary" variant="outlined">
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </Button>
+               </form>
+               <br />
+               <Button
+                  onClick={() => history.push("/qna/list")}
+                  color="primary"
+                  variant="outlined"
+               >
+                  문의 내역
                </Button>
-            </form>
-            <br />
-            <Button
-               onClick={() => history.push("/qna/list")}
-               color="primary"
-               variant="outlined"
-            >
-               문의 내역
-            </Button>
-         </Container>
+            </Container>
+         ) : (
+            <Container align="center">
+               <br />
+               <Typography component="h1" variant="h5">
+                  질문이 등록 중입니다...
+               </Typography>
+               <br />
+            </Container>
+         )}
       </>
    );
 }

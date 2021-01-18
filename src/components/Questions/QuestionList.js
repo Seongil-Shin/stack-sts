@@ -67,7 +67,7 @@ function QuestionList({ history }) {
       setPage(0);
    };
    return (
-      <>
+      <div>
          <Container maxWidth="lg">
             <Typography component="h1" variant="h4">
                문의 내역
@@ -85,10 +85,7 @@ function QuestionList({ history }) {
                </Button>
             )}
             <br />
-            <TableContainer
-               component={Container}
-               className={styles.questionContainer}
-            >
+            <TableContainer component={Container}>
                <Table>
                   <TableHead>
                      <TableRow>
@@ -140,7 +137,7 @@ function QuestionList({ history }) {
                />
             </TableContainer>
          </Container>
-      </>
+      </div>
    );
 }
 

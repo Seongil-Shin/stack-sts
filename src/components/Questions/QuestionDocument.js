@@ -90,7 +90,7 @@ function QuestionDocument({ history }) {
                      </Typography>
                      <div>
                         {Object.values(question.files).map((file, index) => (
-                           <div key={index}>
+                           <div key={index} style={{ overflow: "auto" }}>
                               <a
                                  href={file.URL}
                                  download={file.name}
