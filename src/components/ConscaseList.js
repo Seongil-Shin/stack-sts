@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(8),
    },
    card: {
-      padding: 0,
       height: "100%",
       display: "flex",
       flexDirection: "column",
@@ -30,10 +29,12 @@ const useStyles = makeStyles((theme) => ({
       },
    },
    cardMedia: {
-      paddingTop: "56.25%", // 16:9
+      height: 150,
+      width: "100%",
    },
    footer: {
       padding: theme.spacing(6),
+      textAlign: "center",
    },
 }));
 
@@ -103,8 +104,8 @@ function ConscaseList({ history }) {
                            <CardMedia
                               className={classes.cardMedia}
                               image={conscase.thumbnail}
+                              src={conscase.thumbnail}
                            />
-
                            <CardContent>
                               <Typography
                                  gutterBottom
@@ -119,7 +120,7 @@ function ConscaseList({ history }) {
                   );
                })}
             </Grid>
-            <footer className={classes.footer} align="center">
+            <footer className={classes.footer}>
                <Button
                   size="large"
                   onClick={onSeeMoreClick}
