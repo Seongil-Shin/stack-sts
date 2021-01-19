@@ -15,7 +15,7 @@ function Conscases({ history }) {
    const styles = useStyles();
 
    const onEditingClick = () => {
-      history.push("/admin/conscase/edit");
+      history.push("/admin/conscase/document/edit");
    };
    return (
       <>

@@ -1,7 +1,7 @@
 @import "https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css";
 @font-face {
    font-family: "Jeju Gothic";
-   src: url(../fonts/JejuGothic.ttf) format("truetype");
+   src: url("../fonts/JejuGothic.ttf") format("truetype");
 }
 img {
    max-width: 100%;

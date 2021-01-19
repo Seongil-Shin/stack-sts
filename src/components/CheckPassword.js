@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 const useStyles = makeStyles({
    container: {
       paddingTop: "5%",
+      textAlign: "center",
    },
    inputButton: {
       display: "none",
@@ -67,7 +68,7 @@ function CheckPassword({ password, onToggleIsPassword, history }) {
          <Button
             onClick={goBack}
             variant="outlined"
-            color="primary"
+            color="secondary"
             size="small"
          >
             뒤로가기

@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-      maxWidth: "50%",
    },
    button: {
       float: "right",
@@ -57,7 +56,23 @@ function Modals() {
          aria-describedby="modal-description"
          className={styles.modal}
       >
-         <div className={styles.paper}>
+         <div
+            className={styles.paper}
+            style={{
+               minWidth:
+                  window.innerWidth < 1000
+                     ? window.innerWidth < 500
+                        ? "90%"
+                        : "70%"
+                     : "50%",
+               maxWidth:
+                  window.innerWidth < 1000
+                     ? window.innerWidth < 500
+                        ? "90%"
+                        : "70%"
+                     : "50%",
+            }}
+         >
             <div id="modal-title">
                <Typography components="h1" variant="h5">
                   안내사항
