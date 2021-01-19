@@ -6,13 +6,18 @@ import Link from "@material-ui/core/Link";
 import { Link as ReactLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-   toolbarSecondary: {
+   toolbar: {
       justifyContent: "space-around",
       overflowX: "auto",
    },
+   toobarFontSize: {
+      fontSize: "23px",
+   },
+   toobarFontSizeMobile: {
+      fontSize: "19px",
+   },
    toolbarLink: {
       padding: theme.spacing(1),
-      fontSize: "23px",
       flexShrink: 1,
    },
 }));
@@ -37,7 +42,13 @@ function Header() {
          <Toolbar
             component="nav"
             variant="regular"
-            className={classes.toolbarSecondary}
+            classes={{
+               root: classes.toolbar,
+               gutters:
+                  window.innerWidth < 340
+                     ? classes.toobarFontSizeMobile
+                     : classes.toobarFontSize,
+            }}
          >
             {sections.map((section) => (
                <Link

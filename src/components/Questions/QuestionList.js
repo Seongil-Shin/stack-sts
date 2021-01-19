@@ -90,8 +90,8 @@ function QuestionList({ history }) {
                   <TableHead>
                      <TableRow>
                         <TableCell>제목</TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
+                        <TableCell>&nbsp;</TableCell>
+                        <TableCell>&nbsp;</TableCell>
                      </TableRow>
                   </TableHead>
                   <TableBody>
@@ -126,13 +126,15 @@ function QuestionList({ history }) {
                   </TableBody>
                </Table>
                <TablePagination
+                  rowsPerPage={rowsPerPage}
                   rowsPerPageOptions={[5, 10]}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
                   component="div"
                   count={questions.length}
-                  rowsPerPage={rowsPerPage}
+                  labelRowsPerPage=""
+                  labelDisplayedRows={({ from, to }) => `${from}-${to}`}
                   page={page}
                   onChangePage={handleChangePage}
-                  onChangeRowsPerPage={handleChangeRowsPerPage}
                   className={styles.pagination}
                />
             </TableContainer>

@@ -6,6 +6,7 @@ import QnA from "routes/QnA";
 import ConsCase from "routes/ConsCase";
 import AdminIndex from "routes/AdminIndex";
 import Header from "./Header";
+import { Typography } from "@material-ui/core";
 
 function AppRouter() {
    return (
@@ -19,11 +20,15 @@ function AppRouter() {
             <Route path="/admin" component={AdminIndex} />
 
             <Route
-               render={({ location }) => (
-                  <div>
-                     <h2>이 페이지는 존재하지 않습니다:</h2>
-                     <p>{location.pathname}</p>
-                  </div>
+               render={() => (
+                  <Typography
+                     align="center"
+                     style={{ paddingTop: "10%", paddingBottom: "10%" }}
+                  >
+                     이 페이지는 존재하지 않습니다.
+                     <br />
+                     <br />위 메뉴를 통해 이동해 주세요.
+                  </Typography>
                )}
             />
          </Switch>

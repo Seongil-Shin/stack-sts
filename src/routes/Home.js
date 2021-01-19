@@ -33,23 +33,24 @@ const useInterval = (callback, delay) => {
 
 function Home() {
    const classes = useStyles();
-   const [currentPhoto, setCurrentPhoto] = useState(Date.now() % 5);
+   const [currentPhoto, setCurrentPhoto] = useState(Date.now() % 4);
    const [seconds, setSeconds] = useState(0);
    const images = useMemo(
       () => [
          process.env.REACT_APP_HOME_1,
          process.env.REACT_APP_HOME_2,
-         process.env.REACT_APP_HOME_3,
+         window.innerWidth < 600
+            ? process.env.REACT_APP_HOME_3
+            : process.env.REACT_APP_HOME_5,
          process.env.REACT_APP_HOME_4,
-         process.env.REACT_APP_HOME_5,
       ],
       []
    );
 
    useInterval(() => {
       setSeconds((prev) => prev + 1);
-      setCurrentPhoto(seconds % 5);
-   }, 10000);
+      setCurrentPhoto(seconds % 4);
+   }, 3000);
 
    return (
       <Paper

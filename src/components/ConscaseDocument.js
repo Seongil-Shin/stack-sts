@@ -74,7 +74,7 @@ function ConscaseDocument({ history }) {
                            </Button>
                            &nbsp;&nbsp;&nbsp;
                            <Button
-                              color="primary"
+                              color="secondary"
                               variant="outlined"
                               onClick={onDelete}
                            >
