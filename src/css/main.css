@@ -1,11 +1,8 @@
 @import "https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css";
 @font-face {
    font-family: "Jeju Gothic";
-   src: url("../fonts/JejuGothic.eot?#iefix") format("embedded-opentype"),
-      url("../fonts/JejuGothic.ttf") format("truetype"),
-      url("../fonts/JejuGothic.otf") format("opentype"),
-      url("../fonts/JejuGothic.woff") format("woff"),
-      url("../fonts/JejuGothic.woff2") format("woff2");
+   src: url("../fonts/JejuGothic.ttf") format("truetype"),
+      url("../fonts/JejuGothic.woff") format("woff");
 }
 img {
    max-width: 100%;

@@ -50,7 +50,7 @@ function Home() {
    useInterval(() => {
       setSeconds((prev) => prev + 1);
       setCurrentPhoto(seconds % 4);
-   }, 3000);
+   }, 10000);
 
    return (
       <Paper
