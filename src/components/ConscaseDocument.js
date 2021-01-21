@@ -28,6 +28,7 @@ function ConscaseDocument({ history }) {
    };
 
    useEffect(() => {
+      //location.state로 넘어온 conscaseId로 문서를 파이어스토어에서 가져옴
       async function getConscases() {
          const dbconscases = await fireStoreService
             .collection("conscase")

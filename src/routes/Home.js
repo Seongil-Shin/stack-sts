@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
+//delay 마다 callback 함수를 호출하는 useInterval 함수
 const useInterval = (callback, delay) => {
    const savedCallback = useRef();
 

@@ -43,6 +43,7 @@ function ConscaseList({ history }) {
    const classes = useStyles();
    const [conscases, setConscases] = useState([]);
 
+   //conscaseList를 파이어스토에서 전부 가져와서, 썸네일, 제목, 아이디만 남김.
    const getConscases = async () => {
       const dbconscases = await fireStoreService
          .collection("conscase")

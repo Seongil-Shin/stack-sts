@@ -26,6 +26,7 @@ const useStyles = makeStyles(() => ({
 
 function Greeting() {
    const classes = useStyles();
+   //innerWidth가 460px 이상일 경우 사진-글, 미만일 경우 사진 밑 글로 모양을 나누기위한 변수선언
    const innerWidth = window.innerWidth;
    const profilePhoto = process.env.REACT_APP_PROFILE_PHOTO_PATH;
    return (

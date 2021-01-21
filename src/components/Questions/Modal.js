@@ -29,6 +29,7 @@ function Modals() {
    const MODAL_TIMESET_FOR_STATE = localStorage.getItem("modalTimeSetForState");
    const styles = useStyles();
 
+   //24시간동안 보지않음을 눌렀는지 확인
    useEffect(() => {
       const handleShowModal = () => {
          if (MODAL_TIMESET_FOR_STATE && MODAL_TIMESET_FOR_STATE > new Date())
@@ -42,7 +43,7 @@ function Modals() {
       setShowModal(false);
    };
 
-   const onNoModalClick = () => {
+   const onNoModalFor24HClick = () => {
       let expires = new Date();
       expires = expires.setHours(expires.getHours() + 24);
       localStorage.setItem("modalTimeSetForState", expires);
@@ -105,7 +106,7 @@ function Modals() {
                <Button
                   variant="outlined"
                   color="secondary"
-                  onClick={onNoModalClick}
+                  onClick={onNoModalFor24HClick}
                >
                   24시간 안보기
                </Button>

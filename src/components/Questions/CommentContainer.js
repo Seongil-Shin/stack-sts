@@ -39,12 +39,14 @@ const useStyles = makeStyles({
    },
 });
 
+//댓글 작성 칸 및 댓글들을 렌더함
 function CommentContainer({ question, history, comments, setComments }) {
    const [newComment, setNewComment] = useState("");
    const styles = useStyles();
    const [nextCommentId, setNextComment] = useState(
       Object.keys(comments).length
    );
+   //miliseconds -> yy/mm/dd
    const getDate = (date) => {
       const months = [
          "01",

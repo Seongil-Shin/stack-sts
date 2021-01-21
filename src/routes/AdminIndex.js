@@ -16,6 +16,7 @@ import ConscaseEdit from "components/admin/ConscaseEdit";
 function AdminIndex() {
    const [userId, setUserId] = useState("");
 
+   //어드민 로그인이 안돼있으면 어드민 홈으로 리다이렉트 시키기 위한, 조건부라우트를 하는 함수
    const CustomRoute = (props) => {
       if (userId === process.env.REACT_APP_ADMIN_UID) {
          return <Route {...props} />;

@@ -7,6 +7,7 @@ import "./css/main.css";
 import Typography from "@material-ui/core/Typography";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
+//폰트 전체적용을 위한 테마 설정
 const theme = createMuiTheme({
    typography: {
       fontFamily: "Jeju Gothic",

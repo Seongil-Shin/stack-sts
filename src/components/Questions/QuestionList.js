@@ -32,6 +32,7 @@ function QuestionList({ history }) {
    const [page, setPage] = useState(0);
    const styles = useStyles();
 
+   //질문목록을 불러옴
    const getQuestions = async () => {
       const dbQuestions = await fireStoreService
          .collection("questions")

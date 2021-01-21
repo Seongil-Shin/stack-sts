@@ -1,4 +1,6 @@
 @import "https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css";
+
+/*--폰트 적용-*/
 @font-face {
    font-family: "Jeju Gothic";
    src: url("../fonts/JejuGothic.ttf") format("truetype"),
@@ -8,6 +10,9 @@ img {
    max-width: 100%;
    height: auto;
 }
+
+/*--제주고딕 폰트 적용시 input type=password 일때 글자가 투명하게 나옴-*/
+/* 이를 방지하기 위해 비밀번호 입력칸만 다른 폰트를 적용함 */
 input[type="password"] {
    font-family: "Courier New", Courier, monospace;
 }
