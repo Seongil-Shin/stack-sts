@@ -160,7 +160,16 @@ function CommentContainer({ question, history, comments, setComments }) {
                      </Box>
                      <br />
                      <Box className={styles.exCommentContent}>
-                        <pre>{comment.comment}</pre>
+                        <p>
+                           {comment.comment.split("\n").map((line, index) => {
+                              return (
+                                 <span key={index}>
+                                    {line}
+                                    <br />
+                                 </span>
+                              );
+                           })}
+                        </p>
                      </Box>
                   </Grid>
                ))}

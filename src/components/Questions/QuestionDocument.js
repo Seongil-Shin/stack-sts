@@ -106,7 +106,14 @@ function QuestionDocument({ history }) {
                   <br />
                   <br />
                   <Box className={styles.content}>
-                     <pre>{question.text}</pre>
+                     {question.text.split("\n").map((line, index) => {
+                        return (
+                           <span key={index}>
+                              {line}
+                              <br />
+                           </span>
+                        );
+                     })}
                   </Box>
                   <Container disableGutters>
                      {(question.password !== "" ||
