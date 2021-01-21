@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+# 조적STS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Link
 
-## Available Scripts
+<https://stacksts.firebaseapp.com/>
+<https://stacksts.web.app/>
 
-In the project directory, you can run:
+## Description
 
-### `yarn start`
+조적STS 회사의 소개 및 문의를 받는 반응형 웹 사이트입니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-  사용자는 회사의 인삿말, 시공사례를 확인할 수 있으며 문의 게시판을 통해 문의를 남길 수 있습니다.
+-  문의는 수정 및 삭제가 가능하며, 비밀번호를 설정하지 않았을 시 관리자를 통해서만 가능합니다.
+-  관리자는 관리자페이지를 통해 시공사례 등록, 수정 및 삭제가 가능하고, 문의에 답변, 수정, 삭제가 가능합니다.
+-  사용자가 문의를 남기거나 수정 또는 댓글을 남길 시, 관리자 이메일로 관련내용을 보내도록 설정을 하였으나, 개인정보가 포함된 관계로 깃허브에 올리진 않았습니다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+It is a responsive website for 조적STS to introduce company and get questions.
 
-### `yarn test`
+-  User can see greeting and construction cases, and ask any questions through question page.
+-  Questions can be updated and deleted, but only through admin if they didn't set a password.
+-  Admin can upload, update and delete conscase under admin page, and can answer to a question.
+-  If user upload or update question or leave a comment, then an email is sent to admin email address. But I haven't committed because that contains private infomations.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech Stack
 
-### `yarn build`
+-  UI : Material-Ui
+-  front-end : React
+-  back-end : Firebase
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Browser Support
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| IE   | Edge   | Chrome | Firefox | Safari |
+| ---- | ------ | ------ | ------- | ------ |
+| 8~11 | latest | latest | latest  | latest |
