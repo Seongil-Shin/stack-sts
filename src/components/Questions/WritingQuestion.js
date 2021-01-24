@@ -14,6 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import Modals from "./Modal";
 import { useLocation } from "react-router-dom";
 
+const crypto = require("crypto");
+
 const useStyles = makeStyles((theme) => ({
    container: {
       alignContent: "center",
@@ -166,10 +168,17 @@ function WritingQuestion({ history }) {
          commentObj = location.state.comment;
       }
       const fileObj = Object.assign({}, attachFiles);
+      //비밀번호 암호화
+      const secret = process.env.REACT_APP_SECRET_KEY;
+      const hashed = crypto
+         .createHmac("sha256", secret)
+         .update(question.password)
+         .digest("hex");
+
       const quesObj = {
          subject: question.subject,
          writer: question.writer,
-         password: question.password,
+         password: hashed,
          text: question.text,
          createdAt: Date.now(),
          files: fileObj,

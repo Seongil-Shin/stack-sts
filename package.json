@@ -6,10 +6,6 @@
       "@material-ui/core": "^4.11.2",
       "@material-ui/icons": "^4.11.2",
       "@material-ui/lab": "^4.0.0-alpha.57",
-      "@testing-library/jest-dom": "^5.11.4",
-      "@testing-library/react": "^11.1.0",
-      "@testing-library/user-event": "^12.1.10",
-      "cors": "^2.8.5",
       "draft-js": "^0.11.7",
       "draftjs-to-html": "^0.9.1",
       "file-saver": "^2.0.5",
@@ -17,16 +13,13 @@
       "html-to-draftjs": "^1.5.0",
       "immutable": "^4.0.0-rc.12",
       "next-redux-wrapper": "^6.0.2",
-      "nodemailer": "^6.4.17",
       "react": "^17.0.1",
       "react-app-polyfill": "^2.0.0",
       "react-dom": "^17.0.1",
       "react-draft-wysiwyg": "^1.14.5",
       "react-router-dom": "^5.2.0",
       "react-scripts": "4.0.1",
-      "styled-components": "^5.2.1",
-      "uuid": "^8.3.2",
-      "web-vitals": "^0.2.4"
+      "uuid": "^8.3.2"
    },
    "scripts": {
       "start": "react-scripts start",

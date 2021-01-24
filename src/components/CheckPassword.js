@@ -3,6 +3,8 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
+const crypto = require("crypto");
+
 const useStyles = makeStyles({
    container: {
       paddingTop: "5%",
@@ -24,7 +26,11 @@ function CheckPassword({ password, onToggleIsPassword, history }) {
 
    const onSubmit = (event) => {
       event.preventDefault();
-      if (checkPassword === password) {
+      const hashed = crypto
+         .createHmac("sha256", process.env.REACT_APP_SECRET_KEY)
+         .update(checkPassword)
+         .digest("hex");
+      if (hashed === password) {
          onToggleIsPassword();
          setIsWrong(false);
       } else {

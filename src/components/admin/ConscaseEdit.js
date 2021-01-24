@@ -32,6 +32,8 @@ function ConscaseEdit() {
    const [thumbnail, setThumbnail] = useState("");
    const history = useHistory();
    const location = useLocation();
+
+   //수정모드일시 location.state에 들어있는 conscase를 뽑아 edit창을 초기화시킴
    useEffect(() => {
       if (location.state) {
          setSubject(location.state.conscase.subject);
@@ -48,6 +50,7 @@ function ConscaseEdit() {
       }
    }, [location]);
 
+   //수정모드일땐 set을, 작성모드일땐 add를 적용함.
    const onSubmit = async (event) => {
       event.preventDefault();
       const conscaseObj = {
