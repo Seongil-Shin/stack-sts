@@ -282,8 +282,8 @@ function WritingQuestion({ history }) {
                      multiline
                      rows="21"
                      className={styles.content}
-                     placeholder="*형식 내용 상관없이 모든 문의 가능합니다.
-*이메일, 전화번호, 카카오톡 ID 등 어떤 연락처라도 남겨주시면, 그쪽으로 답변드리겠습니다.
+                     placeholder="*견적 문의는 도면과 현장 위치를 제공해주셔야 가능합니다.
+*연락처를 남겨주실 경우, 그 연락처로 답변을 드리겠습니다.
 *연락처가 없을 시, 댓글로 답변드리겠습니다."
                      required
                   />
