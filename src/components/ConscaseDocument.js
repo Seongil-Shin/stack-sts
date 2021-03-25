@@ -5,12 +5,15 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import ImageModal from "./elements/ImageModal";
 
 function ConscaseDocument({ history }) {
    const location = useLocation();
    const conscaseId = location.state.conscaseId;
    const [init, setInit] = useState(false);
    const [conscase, setConscase] = useState({});
+   const [modalSrc, setModalSrc] = useState("");
+   const [showModal, setShowModal] = useState(false);
 
    const onEditClick = () => {
       history.push({
@@ -26,7 +29,20 @@ function ConscaseDocument({ history }) {
          history.goBack();
       }
    };
-
+   useEffect(() => {
+      const c = (e) => {
+         if (e.target.currentSrc) {
+            setModalSrc(e.target.currentSrc);
+            setShowModal((prev) => !prev);
+         } else if (showModal) {
+            setShowModal((prev) => !prev);
+         }
+      };
+      document.addEventListener("click", c);
+      return () => {
+         document.removeEventListener("click", c);
+      };
+   }, [showModal]);
    useEffect(() => {
       //location.state로 넘어온 conscaseId로 문서를 파이어스토어에서 가져옴
       async function getConscases() {
@@ -47,6 +63,7 @@ function ConscaseDocument({ history }) {
       <>
          {init ? (
             <>
+               <ImageModal src={modalSrc} showModal={showModal} />
                <br />
                <Container maxWidth="md">
                   <Typography component="h1" variant="h4">
