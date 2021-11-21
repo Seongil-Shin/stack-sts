@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory, useLocation } from "react-router-dom";
+import { getYYYYMMDD } from "utils/getYYYYMMDD";
 
 const useStyles = makeStyles((theme) => ({
    subject: {
@@ -65,7 +66,10 @@ function ConscaseEdit() {
             .doc(location.state.id)
             .set(conscaseObj);
       } else {
-         await fireStoreService.collection("conscase").add(conscaseObj);
+         await fireStoreService
+            .collection("conscase")
+            .doc(`${getYYYYMMDD(new Date())}-${conscaseObj.subject}`)
+            .set(conscaseObj);
       }
       history.push("/admin/conscase");
    };
@@ -142,8 +146,7 @@ function ConscaseEdit() {
             size="small"
             color="primary"
             variant="outlined"
-            onClick={() => history.push("/admin/conscase")}
-         >
+            onClick={() => history.push("/admin/conscase")}>
             등록 취소
          </Button>
          &nbsp;&nbsp;
@@ -151,8 +154,7 @@ function ConscaseEdit() {
             size="small"
             color="primary"
             variant="outlined"
-            onClick={onCheck}
-         >
+            onClick={onCheck}>
             미리보기
          </Button>
          <br />
@@ -162,8 +164,7 @@ function ConscaseEdit() {
                className={styles.checkContainer}
                border={1}
                borderRadius={13}
-               borderColor="grey.500"
-            >
+               borderColor="grey.500">
                <Box className={styles.checkContent}>
                   <div dangerouslySetInnerHTML={{ __html: editorToHtml }} />
                </Box>

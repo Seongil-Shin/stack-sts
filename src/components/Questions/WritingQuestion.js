@@ -13,6 +13,7 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import Typography from "@material-ui/core/Typography";
 import Modals from "./Modal";
 import { useLocation } from "react-router-dom";
+import { getYYYYMMDD } from "utils/getYYYYMMDD";
 
 const crypto = require("crypto");
 
@@ -123,6 +124,7 @@ function WritingQuestion({ history }) {
    const onSubmit = async (event) => {
       event.preventDefault();
       setIsWriting(false);
+      const date = new Date();
       const attachFiles = [];
       if (uploadFiles !== null) {
          for (const file of uploadFiles) {
@@ -132,7 +134,9 @@ function WritingQuestion({ history }) {
                if (file.fileURL.startsWith("data:")) {
                   const attachmentRef = storageService
                      .ref()
-                     .child(`questionFiles/${uuidv4()}`);
+                     .child(
+                        `questionFiles/${getYYYYMMDD(date)}-${file.fileName}`
+                     );
                   const response = await attachmentRef.putString(
                      file.fileURL,
                      "data_url"
@@ -187,7 +191,10 @@ function WritingQuestion({ history }) {
       };
 
       if (!location.state) {
-         await fireStoreService.collection("questions").add(quesObj);
+         await fireStoreService
+            .collection("questions")
+            .doc(`${getYYYYMMDD(date)}-${quesObj.subject}`)
+            .set(quesObj);
       } else {
          await fireStoreService
             .collection("questions")
@@ -301,8 +308,7 @@ function WritingQuestion({ history }) {
                               variant="outlined"
                               size="small"
                               color="primary"
-                              component="span"
-                           >
+                              component="span">
                               파일선택
                            </Button>
 
@@ -313,8 +319,7 @@ function WritingQuestion({ history }) {
                               aria-label="delete"
                               color="secondary"
                               size="small"
-                              onClick={(e) => onFileDelete(file.id, e)}
-                           >
+                              onClick={(e) => onFileDelete(file.id, e)}>
                               <DeleteOutlinedIcon />
                            </IconButton>
                            <br />
@@ -325,8 +330,7 @@ function WritingQuestion({ history }) {
                         <Button
                            color="primary"
                            variant="outlined"
-                           onClick={onAddFile}
-                        >
+                           onClick={onAddFile}>
                            파일 개수 추가
                         </Button>
                      </Box>
@@ -339,8 +343,7 @@ function WritingQuestion({ history }) {
                <Button
                   onClick={() => history.push("/qna/list")}
                   color="primary"
-                  variant="outlined"
-               >
+                  variant="outlined">
                   문의 내역
                </Button>
             </Container>
