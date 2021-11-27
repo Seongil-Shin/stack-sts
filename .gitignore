@@ -27,3 +27,4 @@ build
 .firebase
 
 yarn.lock
+package-lock.json
