@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { storageService, fireStoreService } from "fbase";
-import { v4 as uuidv4 } from "uuid";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import TextField from "@material-ui/core/TextField";
@@ -228,7 +227,7 @@ function WritingQuestion({ history }) {
 
    return (
       <>
-         <Modals />
+         {false && <Modals />}
          {isWriting ? (
             <Container maxWidth="md" className={styles.container}>
                <form onSubmit={onSubmit}>
@@ -291,7 +290,8 @@ function WritingQuestion({ history }) {
                      className={styles.content}
                      placeholder="*견적 문의는 도면과 현장 위치를 제공해주셔야 가능합니다.
 *연락처를 남겨주실 경우, 그 연락처로 답변을 드리겠습니다.
-*연락처가 없을 시, 댓글로 답변드리겠습니다."
+*연락처가 없을 시, 댓글로 답변드리겠습니다.
+*답변은 최대 1일 소요됩니다."
                      required
                   />
                   <br />
