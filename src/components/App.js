@@ -5,14 +5,14 @@ import Router from "components/Router";
 import Footer from "components/Footer";
 
 function App() {
-   return (
-      <Container maxWidth="lg">
-         <Paper elevation={3}>
-            <Router />
-            <Footer />
-         </Paper>
-      </Container>
-   );
+  return (
+    <Container maxWidth="lg">
+      <Paper elevation={3}>
+        <Router />
+        <Footer />
+      </Paper>
+    </Container>
+  );
 }
 
 export default App;

@@ -25,6 +25,3 @@ yarn-error.log*
 build
 .github
 .firebase
-
-yarn.lock
-package-lock.json

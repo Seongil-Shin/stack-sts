@@ -6,27 +6,27 @@ import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles({
-   menu: {
-      float: "left",
-   },
+  menu: {
+    float: "left",
+  },
 });
 
 function Navigation() {
-   const styles = useStyles();
-   return (
-      <Paper className={styles.menu}>
-         <MenuList>
-            <MenuItem>
-               <Link to="/admin">관리자 홈</Link>
-            </MenuItem>
-            <MenuItem>
-               <Link to="/admin/conscase">시공사례 확인</Link>
-            </MenuItem>
-            <MenuItem>
-               <Link to="/admin/questions">문의 확인</Link>
-            </MenuItem>
-         </MenuList>
-      </Paper>
-   );
+  const styles = useStyles();
+  return (
+    <Paper className={styles.menu}>
+      <MenuList>
+        <MenuItem>
+          <Link to="/admin">관리자 홈</Link>
+        </MenuItem>
+        <MenuItem>
+          <Link to="/admin/conscase">시공사례 확인</Link>
+        </MenuItem>
+        <MenuItem>
+          <Link to="/admin/questions">문의 확인</Link>
+        </MenuItem>
+      </MenuList>
+    </Paper>
+  );
 }
 export default Navigation;
